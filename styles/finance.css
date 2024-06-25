@@ -1,0 +1,256 @@
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+.header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: "Merriweather", serif;
+  font-weight: 900;
+  font-size: 2.5rem;
+  font-style: italic;
+  background-color: #f5f5f5;
+  color: #9c27b0;
+  padding: 0.5rem 1rem;
+}
+
+.header .logo {
+  width: 3rem;
+  overflow: hidden;
+}
+.header .logo img {
+  object-fit: contain;
+  width: 100%;
+}
+
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 80%;
+  margin: auto;
+  padding: 0.5rem;
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+}
+
+.nav .info {
+  display: flex;
+  font-size: 0.85rem;
+  font-family: "Roboto";
+  font-style: italic;
+}
+.nav .info div {
+  margin: 0 0.25rem;
+}
+
+.container {
+  width: 80%;
+  margin: auto;
+  border: 6px solid #9c27b0;
+  display: flex;
+  justify-content: space-around;
+  border-radius: 2rem;
+  padding: 1rem;
+}
+
+.entry {
+  width: 40%;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  background-color: #9c27b0;
+  padding: 1rem;
+  border-radius: 2rem;
+  height: 20rem;
+  justify-content: space-evenly;
+}
+.entry .img {
+  width: 10rem;
+  height: 10rem;
+  background: white;
+  padding: 1rem;
+  border-radius: 50%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 6px solid grey;
+}
+.received .img i {
+  color: #4caf50;
+}
+.sent .img i {
+  color: red;
+}
+.entry .img i {
+  font-size: 11rem;
+}
+.entry input,
+.entry button {
+  border: 2px solid grey;
+  width: 100%;
+  padding: 0.5rem;
+  border-radius: 1.5rem;
+  background-color: white;
+  font-size: 1rem;
+  letter-spacing: 0.15rem;
+  text-transform: uppercase;
+  font-weight: 600;
+}
+input[type="number"]::-webkit-outer-spin-button,
+input[type="number"]::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+.received input:focus {
+  outline: 2px solid #4caf50;
+  border: 2px solid #4caf50;
+}
+
+.sent input:focus {
+  outline: 2px solid red;
+  border: 2px solid red;
+}
+.received button {
+  background-color: #4caf50;
+  color: white;
+}
+.received button:hover {
+  color: #4caf50;
+  background-color: white;
+  border: 2px solid #4caf50;
+  cursor: pointer;
+}
+
+.sent button {
+  background-color: red;
+  color: white;
+}
+.sent button:hover {
+  color: red;
+  background-color: white;
+  border: 2px solid red;
+  cursor: pointer;
+}
+
+.roboto-thin {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: normal;
+}
+
+.roboto-light {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.roboto-regular {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.roboto-medium {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: normal;
+}
+
+.roboto-bold {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.roboto-black {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.roboto-thin-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 100;
+  font-style: italic;
+}
+
+.roboto-light-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.roboto-regular-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.roboto-medium-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 500;
+  font-style: italic;
+}
+
+.roboto-bold-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.roboto-black-italic {
+  font-family: "Roboto", sans-serif;
+  font-weight: 900;
+  font-style: italic;
+}
+
+.merriweather-light {
+  font-family: "Merriweather", serif;
+  font-weight: 300;
+  font-style: normal;
+}
+
+.merriweather-regular {
+  font-family: "Merriweather", serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+.merriweather-bold {
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-style: normal;
+}
+
+.merriweather-black {
+  font-family: "Merriweather", serif;
+  font-weight: 900;
+  font-style: normal;
+}
+
+.merriweather-light-italic {
+  font-family: "Merriweather", serif;
+  font-weight: 300;
+  font-style: italic;
+}
+
+.merriweather-regular-italic {
+  font-family: "Merriweather", serif;
+  font-weight: 400;
+  font-style: italic;
+}
+
+.merriweather-bold-italic {
+  font-family: "Merriweather", serif;
+  font-weight: 700;
+  font-style: italic;
+}
+
+.merriweather-black-italic {
+  font-family: "Merriweather", serif;
+  font-weight: 900;
+  font-style: italic;
+}
