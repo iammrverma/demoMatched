@@ -56,6 +56,18 @@
                 <label for="creditors-today">Today's Creditors</label>
                 <input type="number" id="creditors-today" placeholder="Today's Creditors" required>
             </div>
+            <div class="entry">
+                <label for="accountNumber">Account Number:</label>
+            <select id="accountNumber" name="accountNumber" required>
+              <option value="" disabled selected>
+                Select account number
+              </option>
+              <option value="123456">123456</option>
+              <option value="234567">234567</option>
+              <option value="345678">345678</option>
+              <option value="456789">456789</option>
+            </select>
+            </div>
             <button type="submit">Add Entry</button>
         </form>
     </div>
