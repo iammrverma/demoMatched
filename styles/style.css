@@ -32,9 +32,10 @@
 .container {
   width: 80%;
   margin: 1rem auto;
-  border: 0.5rem solid var(--primary);
   padding: 1rem;
   border-radius: 1rem;
+  box-shadow: 0 0 4px 4px var(--color3);
+  max-width: 960px;
 }
 #loginForm {
   display: flex;
@@ -42,8 +43,8 @@
   color: var(--primary);
 }
 .radio-grp{
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr;
+  display: flex;
+  flex-wrap: wrap;
   grid-gap: 1rem;
   padding: 0.5rem;
 }
@@ -59,24 +60,51 @@
   border-radius: 0.5rem;
   text-align: center;
   font-size: 1.25rem;
+  flex-grow: 1;
 }
 .custom-radio:checked + .custom-label, .custom-label:hover {
   background-color: var(--primary);
   color: white;
+  box-shadow: 0 0 3px 3px var(--color3);
 }
 .inputs{
-  display: grid;
-  grid-template-columns: 1fr 1fr;
-  grid-gap: 1rem;
+  display: flex;
+  gap: 1rem;
   padding: 0.5rem;
+  flex-wrap: wrap;
 }
 .inputs input{
-  padding: 0.25rem 1rem;
   padding: 0.25rem 1rem;
   border: 0.25rem solid var(--primary);
   border-radius: 0.5rem;
   font-size: 1.25rem;
+  flex-grow: 1;
 }
 .inputs input:focus{
   outline: none;
+  box-shadow: 0 0 3px 3px var(--color3);
+}
+
+button{
+  padding: 0.5rem;
+  background-color: var(--primary);
+  color: white;
+  outline: none;
+  border: none;
+  border-radius: 0.5rem;
+  cursor: pointer;
+}
+button:hover{
+  box-shadow: 0 0 2px 2px var(--color3);
+}
+
+@media only screen and (max-width: 430px) {
+  .container{
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
+  }
+  .inputs input{
+    width: 100%;
+  }
 }
