@@ -43,7 +43,7 @@
   flex-direction: column;
   color: var(--primary);
 }
-.radio-grp{
+.radio-grp {
   display: flex;
   flex-wrap: wrap;
   grid-gap: 1rem;
@@ -52,7 +52,7 @@
 .custom-radio {
   display: none;
 }
-.custom-radio + .custom-label{
+.custom-radio + .custom-label {
   cursor: pointer;
   transition: background-color 0.3s, border-color 0.3s;
   color: var(--primary);
@@ -64,18 +64,19 @@
   flex-grow: 1;
   font-family: "Poppins", sans-serif;
 }
-.custom-radio:checked + .custom-label, .custom-label:hover {
+.custom-radio:checked + .custom-label,
+.custom-label:hover {
   background-color: var(--primary);
   color: white;
   box-shadow: 0 0 3px 3px var(--color3);
 }
-.inputs{
+.inputs {
   display: flex;
   gap: 1rem;
   padding: 0.5rem;
   flex-wrap: wrap;
 }
-.inputs input{
+.inputs input {
   padding: 0.25rem 1rem;
   border: 0.25rem solid var(--primary);
   border-radius: 0.5rem;
@@ -83,12 +84,12 @@
   flex-grow: 1;
   font-family: "Poppins", sans-serif;
 }
-.inputs input:focus{
+.inputs input:focus {
   outline: none;
   box-shadow: 0 0 3px 3px var(--color3);
 }
 
-button{
+button {
   padding: 0.5rem;
   background-color: var(--primary);
   color: white;
@@ -98,17 +99,17 @@ button{
   cursor: pointer;
   font-family: "Poppins", sans-serif;
 }
-button:hover{
+button:hover {
   box-shadow: 0 0 2px 2px var(--color3);
 }
 
 @media only screen and (max-width: 430px) {
-  .container{
+  .container {
     width: 100%;
     box-shadow: none;
     border-radius: 0;
   }
-  .inputs input{
+  .inputs input {
     width: 100%;
   }
 }

@@ -1,45 +1,46 @@
-*{
-    margin: 0;padding: 0;
-    box-sizing: border-box;
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
 }
 :root {
-    --primary: #de4a48;
-    --color2: #e36187;
-    --color3: #e9a7a9;
-    --color4: #edd1d0;
-  }
+  --primary: #de4a48;
+  --color2: #e36187;
+  --color3: #e9a7a9;
+  --color4: #edd1d0;
+}
 .header {
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    font-family: "Poppins", sans-serif;
-    font-weight: 900;
-    font-size: 2.5rem;
-    font-style: italic;
-    background-color: #f5f5f5;
-    color: var(--primary);
-    padding: 0.5rem 1rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  font-family: "Poppins", sans-serif;
+  font-weight: 900;
+  font-size: 2.5rem;
+  font-style: italic;
+  background-color: #f5f5f5;
+  color: var(--primary);
+  padding: 0.5rem 1rem;
 }
 
-.header .logo{
-    width: 3rem;
-    overflow: hidden;
+.header .logo {
+  width: 3rem;
+  overflow: hidden;
 }
-.header .logo img{
-    object-fit: contain;
-    width: 100%;
+.header .logo img {
+  object-fit: contain;
+  width: 100%;
 }
 
-.nav{
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
-    width: 80%;
-    margin: auto;
-    padding: 0.5rem;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    color: var(--primary);
+.nav {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  width: 80%;
+  margin: auto;
+  padding: 0.5rem;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  color: var(--primary);
 }
 
 /* 
@@ -50,214 +51,213 @@
     font-style: italic;
     color: var(--color3);
 } */
-.nav .info div{
-    margin: 0 0.25rem;
+.nav .info div {
+  margin: 0 0.25rem;
 }
 
-.feilds{
-    display: grid;
-    grid-template-columns: repeat(4, 1fr);
-    padding: 1rem;
-    width: 80%;
-    margin: auto;
-    justify-items: center;
-    grid-gap: 1rem 0.5rem;
-    background-color: var(--color4);
-    color: var(--primary);
-    border-radius: 0.5rem;
-    font-family: "Poppins", sans-serif;
+.feilds {
+  display: grid;
+  grid-template-columns: repeat(4, 1fr);
+  padding: 1rem;
+  width: 80%;
+  margin: auto;
+  justify-items: center;
+  grid-gap: 1rem 0.5rem;
+  background-color: var(--color4);
+  color: var(--primary);
+  border-radius: 0.5rem;
+  font-family: "Poppins", sans-serif;
 }
 
-.feilds .feild{
-    display: inline-flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    align-items: center;
-    text-align: center;
+.feilds .feild {
+  display: inline-flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
 
-.feilds .feild .name{
-    font-family: "Poppins", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    margin-bottom: 0.25rem;
+.feilds .feild .name {
+  font-family: "Poppins", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  margin-bottom: 0.25rem;
 }
 
-.feilds .feild .amount{
-    font-family: "Merriweather", serif;
-    font-weight: 600;
-    font-style: italic;
-    background-color: #f5f5f5;
-    color: black;
-    padding: 0.35rem 0.65rem;
-    border-radius: 0.25rem;
-    display: inline-flex;
-    align-items: center;
-    margin-left: 0.5rem;
-
+.feilds .feild .amount {
+  font-family: "Merriweather", serif;
+  font-weight: 600;
+  font-style: italic;
+  background-color: #f5f5f5;
+  color: black;
+  padding: 0.35rem 0.65rem;
+  border-radius: 0.25rem;
+  display: inline-flex;
+  align-items: center;
+  margin-left: 0.5rem;
 }
 
-.badge{
-    font-family: "Merriweather", serif;
-    font-weight: 400;
-    font-style: normal;
-    font-size: 0.75em;
-    background-color: var(--color2);
-    border-radius: 0.25rem;
-    padding: 0.35em 0.65em;
-    margin-left: 0.25rem;
-    color: white;
+.badge {
+  font-family: "Merriweather", serif;
+  font-weight: 400;
+  font-style: normal;
+  font-size: 0.75em;
+  background-color: var(--color2);
+  border-radius: 0.25rem;
+  padding: 0.35em 0.65em;
+  margin-left: 0.25rem;
+  color: white;
 }
 
-.today{
-    display: grid;
-    grid-template-columns: 1fr;
-    row-gap: 1rem;
-    padding: 1rem 2rem;
-    width: 80%;
-    font-family: "Poppins", sans-serif;
-    font-weight: 400;
-    margin: auto;
+.today {
+  display: grid;
+  grid-template-columns: 1fr;
+  row-gap: 1rem;
+  padding: 1rem 2rem;
+  width: 80%;
+  font-family: "Poppins", sans-serif;
+  font-weight: 400;
+  margin: auto;
 }
 
-.today .heading{
-    display: flex;
-    justify-content: space-between;
-    align-items: baseline;
+.today .heading {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
 }
-.today #date{
-    font-family: "Merriweather", serif;
+.today #date {
+  font-family: "Merriweather", serif;
 }
-.entries .entry{
-    display: flex;
-    padding: 0.5rem 1rem;
-    background: #f5f5f5;
-    justify-content: space-between;
-    align-items: center;
-    border-radius: 0.5rem;
-    margin-bottom: 0.75rem;
-}
-
-.entry .info{
-    display: flex;
-    width: 70%;
-    justify-content: space-between;
-    align-items: center;
-}
-.entry .info .type{
-    font-family: "Roboto", sans-serif;
-    font-weight: 600;
-    font-style: normal;
-    width: 30%;
+.entries .entry {
+  display: flex;
+  padding: 0.5rem 1rem;
+  background: #f5f5f5;
+  justify-content: space-between;
+  align-items: center;
+  border-radius: 0.5rem;
+  margin-bottom: 0.75rem;
 }
 
-.entry .info .amount{
-    font-family: "Merriweather", serif;
-    font-weight: 600;
-    font-style: italic;
+.entry .info {
+  display: flex;
+  width: 70%;
+  justify-content: space-between;
+  align-items: center;
+}
+.entry .info .type {
+  font-family: "Roboto", sans-serif;
+  font-weight: 600;
+  font-style: normal;
+  width: 30%;
 }
 
-#accountNumber{
-    font-family: "Poppins", sans-serif;
-    border: none;
-    border: 0.25rem solid var(--primary);
-    padding: 0 0.25rem 0.25rem 0.25rem;
-    border-radius: 0.35rem;
-    background-color: var(--primary);
-    color: white;
-    outline: none;
-    cursor: pointer;
+.entry .info .amount {
+  font-family: "Merriweather", serif;
+  font-weight: 600;
+  font-style: italic;
 }
 
 #accountNumber {
-    background-color: var(--primary);
-    color: white;
+  font-family: "Poppins", sans-serif;
+  border: none;
+  border: 0.25rem solid var(--primary);
+  padding: 0 0.25rem 0.25rem 0.25rem;
+  border-radius: 0.35rem;
+  background-color: var(--primary);
+  color: white;
+  outline: none;
+  cursor: pointer;
+}
+
+#accountNumber {
+  background-color: var(--primary);
+  color: white;
+  border: none;
+  outline: none;
+  padding: 0.25rem;
+  border-radius: 0.5rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  font-family: "Merriweather", serif;
+  font-style: italic;
+}
+
+#accountNumber option {
+  background-color: var(--primary);
+  color: #f3f3f3;
+  font-family: "Merriweather", serif;
+}
+#accountNumber:focus {
+  border: none;
+  box-shadow: 0 0 2px 2px var(--color3);
+}
+
+#accountNumber:hover {
+  border: none;
+  box-shadow: 0 0 2px 2px var(--color3);
+  background-color: white;
+  color: grey;
+}
+
+@media only screen and (max-width: 430px) {
+  .header {
+    font-size: 2rem;
+  }
+  .nav {
+    width: 100%;
+    font-size: 0.85rem;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+  .nav .info {
+    font-size: 0.75rem;
+  }
+  .feilds {
+    grid-template-columns: 1fr 1fr;
+    width: 90%;
+  }
+  .feilds .feild {
+    flex-direction: column;
+    text-align: center;
+    font-size: 0.75rem;
+  }
+
+  .today {
+    width: 100%;
+    padding: 1rem;
+    font-size: 0.85rem;
+  }
+  .today .entry {
+    padding: 0.5rem;
+  }
+  .today .entry .info {
+    width: 100%;
+    font-size: 0.75rem;
+  }
+  .today .entry .info .type {
+    font-size: 0.75rem;
+  }
+  .today .entry .user {
+    display: none;
+  }
+  .container {
+    width: 100%;
+    box-shadow: none;
+    border-radius: 0;
     border: none;
-    outline: none;
-    padding: 0.25rem;
-    border-radius: 0.5rem;
-    cursor: pointer;
-    transition: all 0.3s ease;
-    font-family: "Merriweather", serif;
-    font-style: italic;
   }
 
-  #accountNumber option {
-    background-color: var(--primary);
-    color: #f3f3f3;
-    font-family: "Merriweather", serif;
+  #entryForm {
+    width: 100%;
+    font-size: 1rem;
   }
-  #accountNumber:focus {
-    border: none;
-    box-shadow: 0 0 2px 2px var(--color3);
+  .entry label {
+    display: none;
   }
-  
-  #accountNumber:hover {
-    border: none;
-    box-shadow: 0 0 2px 2px var(--color3);
-    background-color: white;
-    color: grey;
+  .entry input {
+    width: 100%;
   }
-
-  @media only screen and (max-width: 430px) {
-    .header {
-      font-size: 2rem;
-    }
-    .nav {
-      width: 100%;
-      font-size: 0.85rem;
-      padding-left: 1rem;
-      padding-right: 1rem;
-    }
-    .nav .info{
-        font-size: 0.75rem;
-    }
-    .feilds{
-        grid-template-columns: 1fr 1fr;
-        width: 90%;
-    }
-    .feilds .feild{
-        flex-direction:column;
-        text-align: center;
-        font-size: 0.75rem;
-    }
-
-    .today{
-        width: 100%;
-        padding: 1rem;
-        font-size: 0.85rem;
-    }
-    .today .entry {
-        padding: 0.5rem;
-    }
-    .today .entry .info{
-        width: 100%;
-        font-size: 0.75rem;
-    }
-    .today .entry .info .type{
-        font-size: 0.75rem;
-    }
-    .today .entry .user{
-        display: none;
-    }
-    .container {
-      width: 100%;
-      box-shadow: none;
-      border-radius: 0;
-      border: none;
-    }
-
-    #entryForm {
-      width: 100%;
-      font-size: 1rem;
-    }
-    .entry label {
-      display: none;
-    }
-    .entry input {
-      width: 100%;
-    }
-    #accountNumber {
-      width: 100%;
-    }
+  #accountNumber {
+    width: 100%;
   }
+}

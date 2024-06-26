@@ -1,81 +1,121 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap" rel="stylesheet">
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
     <link
       href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
-    
+
     <title>Matched | 3T</title>
-    <link rel="icon" href="assets/logo.ico">
-    <link rel="stylesheet" href="styles/style.css">
-</head>
-<body>
+    <link rel="icon" href="assets/logo.ico" />
+    <link rel="stylesheet" href="styles/style.css" />
+  </head>
+  <body>
     <header class="header">
-        <div class="matched">Matched</div>
-        <div class="logo">
-            <img src="assets/logo.ico" alt="3T | logo">
-        </div>
+      <div class="matched">Matched</div>
+      <div class="logo">
+        <img src="assets/logo.ico" alt="3T | logo" />
+      </div>
     </header>
     <div class="container">
-        <form id="loginForm">
-        
-            Select department
-        
+      <form id="loginForm">
+        Select department
+
         <div class="radio-grp">
-            <input type="radio" id="finance" name="department" value="finance" class="custom-radio">
-            <label for="finance" class="custom-label input">Finance</label>
-            <input type="radio" id="accounts" name="department" value="accounts"    class="custom-radio">
-            <label for="accounts" class="custom-label input">Accounts</label>
-            <input type="radio" id="cfo" name="department" value="cfo" class="custom-radio">
-            <label for="cfo" class="custom-label input">CFO</label>
+          <input
+            type="radio"
+            id="finance"
+            name="department"
+            value="finance"
+            class="custom-radio"
+          />
+          <label for="finance" class="custom-label input">Finance</label>
+          <input
+            type="radio"
+            id="accounts"
+            name="department"
+            value="accounts"
+            class="custom-radio"
+          />
+          <label for="accounts" class="custom-label input">Accounts</label>
+          <input
+            type="radio"
+            id="cfo"
+            name="department"
+            value="cfo"
+            class="custom-radio"
+          />
+          <label for="cfo" class="custom-label input">CFO</label>
         </div>
 
-            <div for="">Enter Name and Email</div>
-            <div class="inputs">
-                <input type="text" id="name" class="input" placeholder="Name" required>
-            <input type="email" id="email" class="input" placeholder="Email" required>
-            </div>
-            
-            <button type="submit">Login</button>
-        </form>
-    </div>
-    
-    <script>
-        document.getElementById('loginForm').addEventListener('submit', function(event) {
-            event.preventDefault();
-            const department = document.querySelector('input[name="department"]:checked').value;
-            const email = document.getElementById('email').value;
-            const name = document.getElementById('name').value;
+        <div for="">Enter Name and Email</div>
+        <div class="inputs">
+          <input
+            type="text"
+            id="name"
+            class="input"
+            placeholder="Name"
+            required
+          />
+          <input
+            type="email"
+            id="email"
+            class="input"
+            placeholder="Email"
+            required
+          />
+        </div>
 
-            fetch('http://127.0.0.1:3000/api/verifyAccess', {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ department, email })
+        <button type="submit">Login</button>
+      </form>
+    </div>
+
+    <script>
+      document
+        .getElementById("loginForm")
+        .addEventListener("submit", function (event) {
+          event.preventDefault();
+          const department = document.querySelector(
+            'input[name="department"]:checked'
+          ).value;
+          const email = document.getElementById("email").value;
+          const name = document.getElementById("name").value;
+
+          fetch("http://127.0.0.1:3000/api/verifyAccess", {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ department, email }),
+          })
+            .then((response) => response.json())
+            .then((data) => {
+              if (data.accessGranted) {
+                const departmentUrlMap = {
+                  finance: "finance.html",
+                  accounts: "accounts.html",
+                  cfo: "cfo.html",
+                };
+                // Redirect to the department page with email and name as query parameters
+                window.location.href = `${
+                  departmentUrlMap[department]
+                }?email=${encodeURIComponent(email)}&name=${encodeURIComponent(
+                  name
+                )}`;
+              } else {
+                alert("Access denied");
+              }
             })
-            .then(response => response.json())
-            .then(data => {
-                if (data.accessGranted) {
-                    const departmentUrlMap = {
-                        finance: 'finance.html',
-                        accounts: 'accounts.html',
-                        cfo: 'cfo.html'
-                    };
-                    // Redirect to the department page with email and name as query parameters
-                    window.location.href = `${departmentUrlMap[department]}?email=${encodeURIComponent(email)}&name=${encodeURIComponent(name)}`;
-                } else {
-                    alert('Access denied');
-                }
-            })
-            .catch(error => console.error('Error verifying access:', error));
+            .catch((error) => console.error("Error verifying access:", error));
         });
     </script>
-</body>
+  </body>
 </html>
