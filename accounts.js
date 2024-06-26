@@ -5,7 +5,7 @@ function getQueryParams() {
         email: params.get('email')
     };
 }
-function make_request(department, mailid, type, amount, entry_date){
+function make_request(department, mailid, type, amount, entry_date, name, accountNumber){
     fetch("http://127.0.0.1:3000/api/entries", {
         method: "POST",
         headers: {
@@ -19,6 +19,8 @@ function make_request(department, mailid, type, amount, entry_date){
             type,
             amount,
             entry_date,
+            name,
+            accountNumber,
         }),
     })
         .then((response) => response.json())
@@ -48,7 +50,7 @@ document.addEventListener('DOMContentLoaded', function() {
     const department = "accounts"
     document.getElementById('name').innerHTML = email;
     document.getElementById('email').innerHTML = name;
-    document.getElementById('date').innerHTML = department;
+    document.getElementById('date').innerHTML = getDate();
     console.log(name, email, department);
     if (department === 'cfo') {
         fetch('http://127.0.0.1:3000/api/entries', {
@@ -84,6 +86,8 @@ document.addEventListener('DOMContentLoaded', function() {
 
     document.getElementById('entryForm').addEventListener('submit', function(event) {
         event.preventDefault();
+        const accountNumber = document.getElementById("accountNumber").value;
+        console.log(accountNumber);
         const entry_map = {
             "Advice Sum":document.getElementById('advice').value,
             "Purchase Voucher Sum":document.getElementById("purchase-voucher").value,
@@ -96,9 +100,8 @@ document.addEventListener('DOMContentLoaded', function() {
         for (const key in entry_map) {
             if (entry_map.hasOwnProperty(key)) {
                 console.log(`${key}: ${entry_map[key]}`);
-                make_request(department, email, key, entry_map[key], getDate())
+                make_request(department, email, key, entry_map[key], getDate(), name, accountNumber);
             }
-        }
-        
+        } 
     });
 });

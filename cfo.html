@@ -1,57 +1,90 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
 
     <title>CFO Interface</title>
-    <link rel="stylesheet" href="styles/cfo.css">
-    <link rel="icon" href="assets/logo.ico">
-</head>
-<body>
+    <link rel="stylesheet" href="styles/cfo.css" />
+    <link rel="icon" href="assets/logo.ico" />
+  </head>
+  <body>
     <header class="header">
-        <div class="matched">Matched</div>
-        <div class="logo">
-            <img src="assets/logo.ico" alt="3T | logo">
-        </div>
+      <div class="matched">Matched</div>
+      <div class="logo">
+        <img src="assets/logo.ico" alt="3T | logo" />
+      </div>
     </header>
     <nav class="nav">
-        <h2>CFO's Desk</h2>
-        <div class="info">
-            <div class="name" id="name">name</div>
-            <div class="email" id="email">mail</div>
-            <div class="date" id="date">date</div>
-        </div>
+      <h2>CFO's Desk</h2>
+      <div class="info">
+        <select id="accountNumber" name="accountNumber" required>
+          <option value="" disabled selected>Select account number</option>
+          <option value="123456">123456</option>
+          <option value="234567">234567</option>
+          <option value="345678">345678</option>
+          <option value="456789">456789</option>
+        </select>
+      </div>
     </nav>
     <div class="feilds">
-        <div class="feild">
-            <span class="name">Change in debtors</span>
-            <span class="amount" id="debtor-change"></span>
-        </div>
-        <div class="feild" >
-            <span class="name">Change in Creditors</span>
-            <span class="amount" id="creditor-change"></span>
-        </div>
-        <div class="feild" >
-            <span class="name">Outstanding Payables</span>
-            <span class="amount" id="outstanding-payables"><i class="fa-solid fa-indian-rupee-sign"></i> 60000 /-<span class="badge">4 - 2</span></span>
-        </div>
-        <div class="feild" >
-            <span class="name">Net Tax Liability</span>
-            <span class="amount" id="net-tax-liability"><i class="fa-solid fa-indian-rupee-sign"></i> 60000 /-<span class="badge">5 - 3</span></span>
-        </div>
+      <div class="feild">
+        <span class="name">Change in debtors</span>
+        <span class="amount" id="debtor-change"><span
+            class="badge"
+            ></span
+          ></span>
+      </div>
+      <div class="feild">
+        <span class="name">Change in Creditors</span>
+        <span class="amount" id="creditor-change"><span
+            class="badge"
+            ></span
+          ></span>
+      </div>
+      <div class="feild">
+        <span class="name">Outstanding Payables</span>
+        <span class="amount" id="outstanding-payables"
+          ><span
+            class="badge"
+            ></span
+          ></span
+        >
+      </div>
+      <div class="feild">
+        <span class="name">Net Tax Liability</span>
+        <span class="amount" id="net-tax-liability"
+          ><span
+            class="badge"
+            ></span
+          ></span
+        >
+      </div>
     </div>
     <div class="today">
-        <div class="heading">
-            <h2>Today's Entries</h2>
-            <div class="date">date</div>
-        </div>
-        <div class="entries">
-            <!-- <div class="entry">
+      <div class="heading">
+        <h2>Today's Entries</h2>
+        <div id="date">date</div>
+      </div>
+      <div class="entries">
+        <!-- <div class="entry">
                 <div class="info">
                     <span class="badge">1</span>
                     <div class="type">Change in Debtors</div>
@@ -59,9 +92,8 @@
                 </div>
                 <div class="user"> rajesh </div>
             </div> -->
-        </div>
-        
+      </div>
     </div>
     <script src="cfo.js"></script>
-</body>
+  </body>
 </html>

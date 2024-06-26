@@ -108,14 +108,16 @@ app.get('/api/entries', checkAccess, (req, res) => {
         res.status(403).json({ error: 'Unauthorized' });
     }
 });
-
-// Endpoint to add entries (restricted to finance and accounts)
 app.post('/api/entries', checkAccess, (req, res) => {
     const { department } = req;
     if (department === 'finance' || department === 'accounts') {
-        const { department, mailid, type, amount, entry_date } = req.body;
-        const sql = 'INSERT INTO entries (department, mailid, type, amount, entry_date) VALUES (?, ?, ?, ?, ?)';
-        db.query(sql, [department, mailid, type, amount, entry_date], (err, result) => {
+        const { department, mailid, type, amount, entry_date, name, accountNumber } = req.body;
+        if (!name || !accountNumber) {
+            res.status(400).json({ error: 'Name and account number are required' });
+            return;
+        }
+        const sql = 'INSERT INTO entries (department, mailid, type, amount, entry_date, name, acc_number) VALUES (?, ?, ?, ?, ?, ?, ?)';
+        db.query(sql, [department, mailid, type, amount, entry_date, name, accountNumber], (err, result) => {
             if (err) {
                 console.error('Error executing query:', err);
                 res.status(500).json({ error: 'Internal server error' });
@@ -127,6 +129,7 @@ app.post('/api/entries', checkAccess, (req, res) => {
         res.status(403).json({ error: 'Unauthorized' });
     }
 });
+
 
 app.listen(PORT, () => {
     console.log(`Server started on http://localhost:${PORT}`);

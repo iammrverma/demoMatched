@@ -16,7 +16,7 @@ function getDate() {
     return `${year}-${month}-${day}`;
 }
 
-function make_request(department, mailid, type, amount, entry_date){
+function make_request(department, mailid, type, amount, entry_date, name, accountNumber){
     fetch("http://127.0.0.1:3000/api/entries", {
         method: "POST",
         headers: {
@@ -30,6 +30,8 @@ function make_request(department, mailid, type, amount, entry_date){
             type,
             amount,
             entry_date,
+            name,
+            accountNumber,
         }),
     })
         .then((response) => response.json())
@@ -49,7 +51,6 @@ document.addEventListener("DOMContentLoaded", function () {
     const { name, email } = getQueryParams();
     const department = "finance";
     const entry_date = getDate();
-    const mailid = email;
     document.getElementById("name").innerHTML = name;
     document.getElementById("email").innerHTML = email;
     document.getElementById("date").innerHTML = entry_date;
@@ -85,34 +86,13 @@ document.addEventListener("DOMContentLoaded", function () {
                 console.error("Error fetching entries:", error);
             });
     }
-
-    document
-        .getElementById("received")
-        .addEventListener("click", function (event) {
-            event.preventDefault();
-            const amountEle = document.getElementById("received-amount");
-            const amount = amountEle.value;
-            const type = "funds received";
-            if (amount) {
-                make_request(department, mailid, type, amount, entry_date);
-                amountEle.value = "";
-                
-            } else {
-                amountEle.focus();
-            }
-        });
-    document
-        .getElementById("sent")
-        .addEventListener("click", function (event) {
-            event.preventDefault();
-            const amountEle = document.getElementById("sent-amount");
-            const amount = amountEle.value;
-            const type = "funds sent";
-            if (amount) {
-                make_request(department, mailid, type, amount, entry_date)
-                amountEle.value = "";
-            } else {
-                amountEle.focus();
-            }
-        });
+    document.getElementById('fundsForm').addEventListener('submit', function(event) {
+        event.preventDefault();
+        const fundsReceived = document.getElementById("fundsReceived").value;
+        const fundsSent = document.getElementById("fundsSent").value;
+        const accountNumber = document.getElementById("accountNumber").value;
+        console.log(fundsReceived, fundsSent, accountNumber);
+        make_request(department, email, 'funds received', fundsReceived, getDate(), name, accountNumber);
+        make_request(department, email, 'funds sent', fundsSent, getDate(), name, accountNumber);
+    });
 });
