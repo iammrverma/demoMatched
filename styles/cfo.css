@@ -128,7 +128,7 @@
 .today #date {
   font-family: "Merriweather", serif;
 }
-.entries .entry {
+#entries .entry {
   display: flex;
   padding: 0.5rem 1rem;
   background: #f5f5f5;

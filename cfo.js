@@ -48,7 +48,8 @@ document.addEventListener("DOMContentLoaded", function () {
       })
         .then((response) => response.json())
         .then((data) => {
-          const entries = document.getElementsByClassName("entries")[0];
+          const entries = document.getElementById("entries");
+          entries.innerHTML = "";
           data.forEach((entry) => {
             if (
               entry.acc_number == selectedValue &&
@@ -105,7 +106,6 @@ document.addEventListener("DOMContentLoaded", function () {
                     </div>
                     <div class="user"> ${entry.mailid} </div>
                 `;
-              // entryDiv.textContent = JSON.stringify(entry);
               entries.appendChild(entryDiv);
             }
           });

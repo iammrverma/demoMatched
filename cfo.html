@@ -21,7 +21,7 @@
       referrerpolicy="no-referrer"
     />
 
-    <title>CFO Interface</title>
+    <title>Matched | CFO</title>
     <link rel="stylesheet" href="styles/cfo.css" />
     <link rel="icon" href="assets/logo.ico" />
   </head>
@@ -47,39 +47,27 @@
     <div class="feilds">
       <div class="feild">
         <span class="name">Change in debtors</span>
-        <span class="amount" id="debtor-change"
-          ><i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span
-            class="badge"
-            >0</span
-          ></span
-        >
+        <span class="amount" id="debtor-change">
+          <i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span class="badge">0</span>
+        </span>
       </div>
       <div class="feild">
         <span class="name">Change in Creditors</span>
-        <span class="amount" id="creditor-change"
-          ><i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span
-            class="badge"
-            >0</span
-          ></span
-        >
+        <span class="amount" id="creditor-change">
+          <i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span class="badge">0</span>
+        </span>
       </div>
       <div class="feild">
         <span class="name">Outstanding Payables</span>
-        <span class="amount" id="outstanding-payables"
-          ><i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span
-            class="badge"
-            >0</span
-          ></span
-        >
+        <span class="amount" id="outstanding-payables">
+          <i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span class="badge">0</span>
+        </span>
       </div>
       <div class="feild">
         <span class="name">Net Tax Liability</span>
-        <span class="amount" id="net-tax-liability"
-          ><i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span
-            class="badge"
-            >0</span
-          ></span
-        >
+        <span class="amount" id="net-tax-liability">
+          <i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span class="badge">0</span>
+        </span>
       </div>
     </div>
     <div class="today">
@@ -87,18 +75,7 @@
         <h2>Today's Entries</h2>
         <div id="date">date</div>
       </div>
-      <div class="entries">
-        <div class="entry">
-          <div class="info">
-            <span class="badge">0</span>
-            <div class="type">Type</div>
-            <div class="amount">
-              <i class="fa-solid fa-indian-rupee-sign"></i> 000 /-
-            </div>
-          </div>
-          <div class="user">user@3t.com</div>
-        </div>
-      </div>
+      <div id="entries"></div>
     </div>
     <script src="cfo.js"></script>
   </body>
