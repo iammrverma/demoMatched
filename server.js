@@ -108,6 +108,7 @@ app.get("/api/entries", checkAccess, (req, res) => {
     res.status(403).json({ error: "Unauthorized" });
   }
 });
+
 app.post("/api/entries", checkAccess, (req, res) => {
   const { department } = req;
   if (department === "finance" || department === "accounts") {
@@ -142,6 +143,37 @@ app.post("/api/entries", checkAccess, (req, res) => {
         });
       }
     );
+  } else {
+    res.status(403).json({ error: "Unauthorized" });
+  }
+});
+// Endpoint to request access
+app.post("/api/requestAccess", (req, res) => {
+  const { department, email } = req.body;
+  const sql = "INSERT INTO access_requests (department, mailid) VALUES (?, ?)";
+  db.query(sql, [department, email], (err, result) => {
+    if (err) {
+      console.error("Error executing query:", err);
+      res.status(500).json({ error: "Internal server error" });
+      return;
+    }
+    res.json({ success: true, message: "Access request submitted successfully" });
+  });
+});
+
+// Define the route
+app.get("/api/accessRequests", checkAccess, (req, res) => {
+  const { department } = req;
+  if (department === "cfo") {
+    const sql = "SELECT * FROM access_requests";
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      }
+      res.json(result);
+    });
   } else {
     res.status(403).json({ error: "Unauthorized" });
   }

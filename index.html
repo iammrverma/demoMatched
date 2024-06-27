@@ -13,6 +13,10 @@
       href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
       rel="stylesheet"
     />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
 
     <title>Matched | 3T</title>
     <link rel="icon" href="assets/logo.ico" />
@@ -78,44 +82,8 @@
       </form>
     </div>
 
-    <script>
-      document
-        .getElementById("loginForm")
-        .addEventListener("submit", function (event) {
-          event.preventDefault();
-          const department = document.querySelector(
-            'input[name="department"]:checked'
-          ).value;
-          const email = document.getElementById("email").value;
-          const name = document.getElementById("name").value;
-
-          fetch("http://127.0.0.1:3000/api/verifyAccess", {
-            method: "POST",
-            headers: {
-              "Content-Type": "application/json",
-            },
-            body: JSON.stringify({ department, email }),
-          })
-            .then((response) => response.json())
-            .then((data) => {
-              if (data.accessGranted) {
-                const departmentUrlMap = {
-                  finance: "finance.html",
-                  accounts: "accounts.html",
-                  cfo: "cfo.html",
-                };
-                // Redirect to the department page with email and name as query parameters
-                window.location.href = `${
-                  departmentUrlMap[department]
-                }?email=${encodeURIComponent(email)}&name=${encodeURIComponent(
-                  name
-                )}`;
-              } else {
-                alert("Access denied");
-              }
-            })
-            .catch((error) => console.error("Error verifying access:", error));
-        });
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="script.js">
     </script>
   </body>
 </html>

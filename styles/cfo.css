@@ -199,6 +199,16 @@
   color: grey;
 }
 
+#notification{
+  position: fixed;
+  right: 2rem;
+  bottom: 1rem;
+  font-size: 2rem;
+  color: var(--primary);
+  cursor: pointer;
+  width: fit-content;
+}
+
 @media only screen and (max-width: 430px) {
   .header {
     font-size: 2rem;

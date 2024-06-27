@@ -15,7 +15,58 @@ function getDate() {
 
   return `${year}-${month}-${day}`;
 }
+function showRequests(department, email){
+  fetch("http://127.0.0.1:3000/api/accessRequests", {
+    method: "GET",
+    headers: {
+      "x-department": department,
+      "x-email": email,
+    },
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Unauthorized....");
+      }
+      return response.json();
+    })
+    .then(data => {
+      if (Array.isArray(data)) {
+        // const accessRequestsDiv = document.getElementById("accessRequests");
+        // accessRequestsDiv.innerHTML = "";
+        data.forEach(request => {
+          // const requestElement = document.createElement("div");
+          // requestElement.classList.add("request-item");
+          // requestElement.innerHTML = `
+          //   <div>Email: ${request.email}</div>
+          //   <div>Department: ${request.department}</div>
+          //   <button class="approve-button" data-id="${request.id}">Approve</button>
+          //   <button class="reject-button" data-id="${request.id}">Reject</button>
+          // `;
+          console.log(request.mailid, request.department, request.id);
+          // accessRequestsDiv.appendChild(requestElement);
+        });
 
+        document.querySelectorAll(".approve-button").forEach(button => {
+          button.addEventListener("click", function () {
+            // handleRequestAction(this.dataset.id, "approve");
+            console.log("approved");
+          });
+        });
+
+        document.querySelectorAll(".reject-button").forEach(button => {
+          button.addEventListener("click", function () {
+            // handleRequestAction(this.dataset.id, "reject");
+            console.log("rejected");  
+          });
+        });
+      } else {
+        console.error("Data is not an array:", data);
+      }
+    })
+    .catch(error => {
+      console.error("Error fetching access requests:", error);
+    });
+}
 document.addEventListener("DOMContentLoaded", function () {
   const { name, email } = getQueryParams();
 
@@ -34,6 +85,7 @@ document.addEventListener("DOMContentLoaded", function () {
     todayCreditors;
 
   const department = "cfo";
+  showRequests(department, email);
   document
     .getElementById("accountNumber")
     .addEventListener("change", function (event) {
@@ -135,4 +187,11 @@ document.addEventListener("DOMContentLoaded", function () {
         })
         .catch((error) => console.error("Error fetching entries:", error));
     });
+
+    document.getElementById("notification").addEventListener("click", function(event){
+      const notificationBox = document.getElementById("notification");
+      notificationBox.classList.add("open");
+      
+
+    })
 });
