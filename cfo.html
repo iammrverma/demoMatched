@@ -1,85 +1,106 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
-      rel="stylesheet"
-    />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
-      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
 
-    <title>Matched | CFO</title>
-    <link rel="stylesheet" href="styles/cfo.css" />
-    <link rel="icon" href="assets/logo.ico" />
-  </head>
-  <body>
-    <header class="header">
-      <div class="matched">Matched</div>
-      <div class="logo">
-        <img src="assets/logo.ico" alt="3T | logo" />
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+    rel="stylesheet" />
+  <link
+    href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+    rel="stylesheet" />
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+    integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+    crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+  <title>Matched | CFO</title>
+  <link rel="stylesheet" href="styles/cfo.css" />
+  <link rel="icon" href="assets/logo.ico" />
+</head>
+
+<body>
+  <header class="header">
+    <div class="matched">Matched</div>
+    <div class="logo">
+      <img src="assets/logo.ico" alt="3T | logo" />
+    </div>
+  </header>
+  <nav class="nav">
+    <h2>CFO's Desk</h2>
+    <div class="info">
+      <select class="info" id="accountNumber" name="accountNumber" required>
+        <option value="" disabled selected>Select account number</option>
+        <option value="123456">123456</option>
+        <option value="234567">234567</option>
+        <option value="345678">345678</option>
+        <option value="456789">456789</option>
+      </select>
+    </div>
+  </nav>
+  <div class="feilds">
+    <div class="feild">
+      <span class="name">Change in debtors</span>
+      <span class="amount" id="debtor-change">
+        <i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span class="badge">0</span>
+      </span>
+    </div>
+    <div class="feild">
+      <span class="name">Change in Creditors</span>
+      <span class="amount" id="creditor-change">
+        <i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span class="badge">0</span>
+      </span>
+    </div>
+    <div class="feild">
+      <span class="name">Outstanding Payables</span>
+      <span class="amount" id="outstanding-payables">
+        <i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span class="badge">0</span>
+      </span>
+    </div>
+    <div class="feild">
+      <span class="name">Net Tax Liability</span>
+      <span class="amount" id="net-tax-liability">
+        <i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span class="badge">0</span>
+      </span>
+    </div>
+  </div>
+  <div class="today">
+    <div class="heading">
+      <h2>Today's Entries</h2>
+      <div id="date">date</div>
+    </div>
+    <div id="entries"></div>
+  </div>
+  <div id="notification">
+    <div id="header">
+      <span>Requests</span>
+      <span id="close"><i class="fa-solid fa-xmark"></i></span>
+    </div>
+    <div id="notification_badge" class="hidden"></div>
+    <div class="hidden" id="requests">
+      <div class="request">
+        <div class="request_mail">example@3t.com</div>
+        <div class="info">
+          <div class="for">Department</div>
+          <span class="accept"><i class="fa-solid fa-check"></i></span>
+          <span class="reject"><i class="fa-solid fa-xmark"></i></span>
+        </div>
       </div>
-    </header>
-    <nav class="nav">
-      <h2>CFO's Desk</h2>
-      <div class="info">
-        <select class="info" id="accountNumber" name="accountNumber" required>
-          <option value="" disabled selected>Select account number</option>
-          <option value="123456">123456</option>
-          <option value="234567">234567</option>
-          <option value="345678">345678</option>
-          <option value="456789">456789</option>
-        </select>
-      </div>
-    </nav>
-    <div class="feilds">
-      <div class="feild">
-        <span class="name">Change in debtors</span>
-        <span class="amount" id="debtor-change">
-          <i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span class="badge">0</span>
-        </span>
-      </div>
-      <div class="feild">
-        <span class="name">Change in Creditors</span>
-        <span class="amount" id="creditor-change">
-          <i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span class="badge">0</span>
-        </span>
-      </div>
-      <div class="feild">
-        <span class="name">Outstanding Payables</span>
-        <span class="amount" id="outstanding-payables">
-          <i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span class="badge">0</span>
-        </span>
-      </div>
-      <div class="feild">
-        <span class="name">Net Tax Liability</span>
-        <span class="amount" id="net-tax-liability">
-          <i class="fa-solid fa-indian-rupee-sign"></i> 000/-<span class="badge">0</span>
-        </span>
+      <div class="request">
+        <div class="request_mail">example@3t.com</div>
+        <div class="info">
+          <div class="for">Department</div>
+          <span class="reject"><i class="fa-solid fa-xmark"></i></span>
+          <span class="accept"><i class="fa-solid fa-check"></i></span>
+          
+        </div>
       </div>
     </div>
-    <div class="today">
-      <div class="heading">
-        <h2>Today's Entries</h2>
-        <div id="date">date</div>
-      </div>
-      <div id="entries"></div>
-    </div>
-    <div id="notification">
-      <i class="fa-regular fa-bell"></i>
-    </div>
-    <script src="cfo.js"></script>
-  </body>
+    <div id="bell"><i class="fa-regular fa-bell"></i></div>
+  </div>
+  <script src="cfo.js"></script>
+</body>
+
 </html>
