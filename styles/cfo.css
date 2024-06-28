@@ -3,12 +3,14 @@
   padding: 0;
   box-sizing: border-box;
 }
+
 :root {
   --primary: #de4a48;
   --color2: #e36187;
   --color3: #e9a7a9;
   --color4: #edd1d0;
 }
+
 .header {
   display: flex;
   justify-content: space-between;
@@ -26,6 +28,7 @@
   width: 3rem;
   overflow: hidden;
 }
+
 .header .logo img {
   object-fit: contain;
   width: 100%;
@@ -43,14 +46,6 @@
   color: var(--primary);
 }
 
-/* 
-.nav .info{
-    display: flex;
-    font-size: .85rem;
-    font-family: "Poppins", sans-serif;
-    font-style: italic;
-    color: var(--color3);
-} */
 .nav .info div {
   margin: 0 0.25rem;
 }
@@ -125,9 +120,11 @@
   justify-content: space-between;
   align-items: baseline;
 }
+
 .today #date {
   font-family: "Merriweather", serif;
 }
+
 #entries .entry {
   display: flex;
   padding: 0.5rem 1rem;
@@ -144,6 +141,7 @@
   justify-content: space-between;
   align-items: center;
 }
+
 .entry .info .type {
   font-family: "Roboto", sans-serif;
   font-weight: 600;
@@ -187,6 +185,7 @@
   color: #f3f3f3;
   font-family: "Merriweather", serif;
 }
+
 #accountNumber:focus {
   border: none;
   box-shadow: 0 0 2px 2px var(--color3);
@@ -199,24 +198,27 @@
   color: grey;
 }
 
-#notification{
+#notification {
   position: fixed;
   right: 2rem;
   bottom: 1rem;
   font-size: 1rem;
 }
-#notification #header{
+
+#notification #header {
   display: none;
   justify-content: space-between;
   font-size: 1.25rem;
   font-style: italic;
 }
-#bell{
+
+#bell {
   cursor: pointer;
   color: var(--primary);
   font-size: 2rem;
 }
-#notification_badge{
+
+#notification_badge {
   position: fixed;
   z-index: 1;
   width: 0.7rem;
@@ -224,6 +226,7 @@
   border-radius: 50%;
   background-color: var(--color3);
 }
+
 .open {
   width: fit-content;
   height: 300px;
@@ -233,21 +236,28 @@
   flex-direction: column;
   font-family: "Poppins", sans-serif;
 }
-.request{
+
+#requests {
+  min-width: 150px;
+}
+
+.request {
   width: 100%;
-    min-height: 20px;
-    background-color: var(--color4);
-    border-radius: 0.25rem;
-    padding: .25rem .5rem;
-    text-align: right;
-    margin-bottom: .25rem;
+  min-height: 20px;
+  background-color: var(--color4);
+  border-radius: 0.25rem;
+  padding: .25rem .5rem;
+  text-align: right;
+  margin-bottom: .25rem;
 }
-.request .info{
+
+.request .info {
   font-size: .8em;
-    display: grid;
-    grid-template-columns: 3fr .5fr .5fr;
+  display: grid;
+  grid-template-columns: 3fr .5fr .5fr;
 }
-.hidden{
+
+.hidden {
   display: none;
 }
 
@@ -255,19 +265,23 @@
   .header {
     font-size: 2rem;
   }
+
   .nav {
     width: 100%;
     font-size: 0.85rem;
     padding-left: 1rem;
     padding-right: 1rem;
   }
+
   .nav .info {
     font-size: 0.75rem;
   }
+
   .feilds {
     grid-template-columns: 1fr 1fr;
     width: 90%;
   }
+
   .feilds .feild {
     flex-direction: column;
     text-align: center;
@@ -279,19 +293,24 @@
     padding: 1rem;
     font-size: 0.85rem;
   }
+
   .today .entry {
     padding: 0.5rem;
   }
+
   .today .entry .info {
     width: 100%;
     font-size: 0.75rem;
   }
+
   .today .entry .info .type {
     font-size: 0.75rem;
   }
+
   .today .entry .user {
     display: none;
   }
+
   .container {
     width: 100%;
     box-shadow: none;
@@ -303,12 +322,15 @@
     width: 100%;
     font-size: 1rem;
   }
+
   .entry label {
     display: none;
   }
+
   .entry input {
     width: 100%;
   }
+
   #accountNumber {
     width: 100%;
   }

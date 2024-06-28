@@ -147,6 +147,7 @@ app.post("/api/entries", checkAccess, (req, res) => {
     res.status(403).json({ error: "Unauthorized" });
   }
 });
+
 // Endpoint to request access
 app.post("/api/requestAccess", (req, res) => {
   const { department, email } = req.body;
@@ -161,7 +162,20 @@ app.post("/api/requestAccess", (req, res) => {
   });
 });
 
-// Define the route
+app.post("/api/deleteAccessRequest", (req, res) => {
+  const { requestId } = req.body;
+  const sql = "DELETE FROM access_requests WHERE id = ?"; // Corrected table name
+
+  db.query(sql, [requestId], (err, result) => {
+    if (err) {
+      console.error("Error deleting request:", err);
+      res.status(500).json({ error: "Internal server error" });
+      return;
+    }
+    res.json({ success: true, message: "Request deleted successfully" });
+  });
+});
+
 app.get("/api/accessRequests", checkAccess, (req, res) => {
   const { department } = req;
   if (department === "cfo") {
