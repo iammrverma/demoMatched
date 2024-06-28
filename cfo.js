@@ -16,30 +16,48 @@ function getDate() {
   return `${year}-${month}-${day}`;
 }
 
-function handleRequestAction(requestId, action, requestElement) {
-  if (action === "reject") {
-    fetch("http://127.0.0.1:3000/api/deleteAccessRequest", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
+function handleRequestAction(requestId, action, requestElement, requestDepartment, requestMailid) {
+  if(action === "accept"){
+    fetch("http://127.0.0.1:3000/api/acceptAccess", {
+      method:"POST",
+      headers:{
+        "Content-Type":"application/json",
       },
-      body: JSON.stringify({ requestId }),
+      body:JSON.stringify({ requestDepartment , requestMailid }),
+    }).then(response => {
+      if (!response.ok){
+        throw new Error("Failed to delete request");
+      }
+      return response.json();
+    }).then(data => {
+      console.log(data);
+      requestElement.remove();
     })
-      .then(response => {
-        if (!response.ok) {
-          throw new Error("Failed to delete request");
-        }
-        return response.json();
-      })
-      .then(data => {
-        console.log(data);
-        // Remove the request element from the DOM
-        requestElement.remove();
-      })
-      .catch(error => {
-        console.error("Error deleting request:", error);
-      });
+    .catch(error => {
+      console.error("Error accepting request:", error);
+    });
   }
+  fetch("http://127.0.0.1:3000/api/deleteAccessRequest", {
+    method: "POST",
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify({ requestId }),
+  })
+    .then(response => {
+      if (!response.ok) {
+        throw new Error("Failed to delete request");
+      }
+      return response.json();
+    })
+    .then(data => {
+      console.log(data);
+      // Remove the request element from the DOM
+      requestElement.remove();
+    })
+    .catch(error => {
+      console.error("Error deleting request:", error);
+    });
 }
 
 
@@ -99,13 +117,15 @@ document.addEventListener("DOMContentLoaded", function () {
 
         document.querySelectorAll(".accept-button").forEach(button => {
           button.addEventListener("click", function () {
-            console.log("accept button clicked");
+            const requestElement = this.closest('.request');
+            handleRequestAction(this.dataset.id, "accept", requestElement, this.dataset.department, this.dataset.email);
           });
         });
 
         document.querySelectorAll(".reject-button").forEach(button => {
           button.addEventListener("click", function () {
             const requestElement = this.closest('.request');
+            console.log(this);
             handleRequestAction(this.dataset.id, "reject", requestElement);
             console.log("rejected");
           });

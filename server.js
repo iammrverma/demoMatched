@@ -162,6 +162,20 @@ app.post("/api/requestAccess", (req, res) => {
   });
 });
 
+app.post("/api/acceptAccess",  (req, res) => {
+  // const { department } = req;
+  const { requestDepartment , requestMailid } = req.body;
+  const tableName = `${requestDepartment}_access`;
+  const sql = `INSERT INTO ${tableName} (mailid) VALUES (?)`;
+  db.query(sql, [requestMailid], (err, result) => {
+    if (err){
+      console.error("Error executing query", err);
+      res.status(500).json({error: "Internal server error"});
+      return;
+    }
+    res.json({ success:true, message:"Request accepted successfully"});
+  });
+});
 app.post("/api/deleteAccessRequest", (req, res) => {
   const { requestId } = req.body;
   const sql = "DELETE FROM access_requests WHERE id = ?"; // Corrected table name
