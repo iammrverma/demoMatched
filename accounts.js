@@ -11,36 +11,30 @@ function make_request(
   type,
   amount,
   entry_date,
-  name,
   accountNumber
 ) {
   fetch("http://127.0.0.1:3000/api/entries", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-department": department,
-      "x-email": mailid,
     },
-    body: JSON.stringify({
-      department,
-      mailid,
-      type,
-      amount,
-      entry_date,
-      name,
-      accountNumber,
-    }),
+    body: JSON.stringify({department ,mailid, type, amount, entry_date, accountNumber}),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.success) {
-        console.log("Entry added successfully");
-      } else {
-        console.error("Error adding entry: ", data.error);
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          throw new Error(error.error || "Unknown error occurred");
+        });
       }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Entry added successfully:", data);
+      // Handle the successful response, e.g., show a success message or redirect
     })
     .catch((error) => {
-      console.error("Error adding entry", error);
+      console.error("Error adding entry:", error);
+      // Handle errors, e.g., show an error message
     });
 }
 function getDate() {
@@ -120,7 +114,6 @@ document.addEventListener("DOMContentLoaded", function () {
               key,
               entry_map[key],
               getDate(),
-              name,
               accountNumber
             );
             Swal.fire({

@@ -1,7 +1,6 @@
 function getQueryParams() {
   const params = new URLSearchParams(window.location.search);
   return {
-    name: params.get("name"),
     email: params.get("email"),
   };
 }
@@ -22,78 +21,40 @@ function make_request(
   type,
   amount,
   entry_date,
-  name,
   accountNumber
 ) {
   fetch("http://127.0.0.1:3000/api/entries", {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
-      "x-department": department,
-      "x-email": mailid,
     },
-    body: JSON.stringify({
-      department,
-      mailid,
-      type,
-      amount,
-      entry_date,
-      name,
-      accountNumber,
-    }),
+    body: JSON.stringify({department ,mailid, type, amount, entry_date, accountNumber}),
   })
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.success) {
-        console.log("Entry added successfully");
-      } else {
-        console.error("Error adding entry: ", data.error);
+    .then((response) => {
+      if (!response.ok) {
+        return response.json().then((error) => {
+          throw new Error(error.error || "Unknown error occurred");
+        });
       }
+      return response.json();
+    })
+    .then((data) => {
+      console.log("Entry added successfully:", data);
+      // Handle the successful response, e.g., show a success message or redirect
     })
     .catch((error) => {
-      console.error("Error adding entry", error);
+      console.error("Error adding entry:", error);
+      // Handle errors, e.g., show an error message
     });
 }
 
 document.addEventListener("DOMContentLoaded", function () {
-  const { name, email } = getQueryParams();
+  const { email } = getQueryParams();
   const department = "finance";
   const entry_date = getDate();
-  document.getElementById("name").innerHTML = name;
   document.getElementById("email").innerHTML = email;
   document.getElementById("date").innerHTML = entry_date;
 
-  if (department === "cfo") {
-    fetch("http://127.0.0.1:3000/api/entries", {
-      method: "GET",
-      headers: {
-        "x-department": department,
-        "x-email": email,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Unauthorized");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (Array.isArray(data)) {
-          const entriesDiv = document.getElementById("entries");
-          entriesDiv.innerHTML = "";
-          data.forEach((entry) => {
-            const entryElement = document.createElement("div");
-            entryElement.textContent = `Type: ${entry.type}, Amount: ${entry.amount}, Date: ${entry.entry_date}`;
-            entriesDiv.appendChild(entryElement);
-          });
-        } else {
-          console.error("Data is not an array:", data);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching entries:", error);
-      });
-  }
   document
     .getElementById("fundsForm")
     .addEventListener("submit", function (event) {
@@ -109,7 +70,6 @@ document.addEventListener("DOMContentLoaded", function () {
           "funds received",
           fundsReceived,
           getDate(),
-          name,
           accountNumber
         );
         make_request(
@@ -118,7 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
           "funds sent",
           fundsSent,
           getDate(),
-          name,
           accountNumber
         );
         // Show success notification

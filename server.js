@@ -57,42 +57,35 @@ function checkAccess(req, res, next) {
   });
 }
 
-// Endpoint to verify access
 app.post("/api/verifyAccess", (req, res) => {
-  const { department, email } = req.body;
+  const { email, password } = req.body;
 
-  let tableName;
-  switch (department) {
-    case "finance":
-      tableName = "finance_access";
-      break;
-    case "accounts":
-      tableName = "accounts_access";
-      break;
-    case "cfo":
-      tableName = "cfo_access";
-      break;
-    default:
-      return res.status(400).json({ error: "Invalid department" });
-  }
-
-  const sql = `SELECT * FROM ${tableName} WHERE mailid = ?`;
-  db.query(sql, [email], (err, result) => {
+  const sql = `SELECT department FROM users WHERE email = ? AND password = ?`;
+  db.query(sql, [email, password], (err, result) => {
     if (err) {
       console.error("Error executing query:", err);
       res.status(500).json({ error: "Internal server error" });
       return;
     }
     if (result.length > 0) {
+      const { department } = result[0];
       res.json({ accessGranted: true, department });
     } else {
-      res.json({ accessGranted: false });
+      res.status(401).json({ accessGranted: false, error: "Invalid email or password" });
     }
   });
 });
 
+app.use((req, res, next) => {
+  const department = req.headers["x-department"];
+  if (department) {
+    req.department = department;
+  }
+  next();
+});
+
 // Endpoint to fetch entries (restricted to CFO)
-app.get("/api/entries", checkAccess, (req, res) => {
+app.get("/api/entries", (req, res) => {
   const { department } = req;
   if (department === "cfo") {
     const sql = "SELECT * FROM entries";
@@ -109,27 +102,21 @@ app.get("/api/entries", checkAccess, (req, res) => {
   }
 });
 
-app.post("/api/entries", checkAccess, (req, res) => {
-  const { department } = req;
-  if (department === "finance" || department === "accounts") {
+
+app.post("/api/entries", (req, res) => {
     const {
       department,
       mailid,
       type,
       amount,
       entry_date,
-      name,
       accountNumber,
     } = req.body;
-    if (!name || !accountNumber) {
-      res.status(400).json({ error: "Name and account number are required" });
-      return;
-    }
     const sql =
-      "INSERT INTO entries (department, mailid, type, amount, entry_date, name, acc_number) VALUES (?, ?, ?, ?, ?, ?, ?)";
+      "INSERT INTO entries (department, mailid, type, amount, entry_date, acc_number) VALUES (?, ?, ?, ?, ?, ?)";
     db.query(
       sql,
-      [department, mailid, type, amount, entry_date, name, accountNumber],
+      [department, mailid, type, amount, entry_date, accountNumber],
       (err, result) => {
         if (err) {
           console.error("Error executing query:", err);
@@ -143,9 +130,6 @@ app.post("/api/entries", checkAccess, (req, res) => {
         });
       }
     );
-  } else {
-    res.status(403).json({ error: "Unauthorized" });
-  }
 });
 
 // Endpoint to request access
