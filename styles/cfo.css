@@ -66,7 +66,7 @@
 
 .feilds .feild {
   display: inline-flex;
-  flex-wrap: wrap;
+  flex-direction: column;
   justify-content: center;
   align-items: center;
   text-align: center;
@@ -109,7 +109,7 @@
   grid-template-columns: 1fr;
   row-gap: 1rem;
   padding: 1rem 2rem;
-  width: 80%;
+  width: 90%;
   font-family: "Poppins", sans-serif;
   font-weight: 400;
   margin: auto;
@@ -135,21 +135,15 @@
   margin-bottom: 0.75rem;
 }
 
-.entry .info {
-  display: flex;
-  width: 70%;
-  justify-content: space-between;
-  align-items: center;
-}
-
-.entry .info .type {
+.entry .type {
   font-family: "Roboto", sans-serif;
   font-weight: 600;
   font-style: normal;
-  width: 30%;
+  width: 40%;
+  text-wrap: balance;
 }
 
-.entry .info .amount {
+.entry .amount {
   font-family: "Merriweather", serif;
   font-weight: 600;
   font-style: italic;
@@ -184,6 +178,7 @@
   background-color: var(--primary);
   color: #f3f3f3;
   font-family: "Merriweather", serif;
+  text-align: center;
 }
 
 #accountNumber:focus {
@@ -283,8 +278,6 @@
   }
 
   .feilds .feild {
-    flex-direction: column;
-    text-align: center;
     font-size: 0.75rem;
   }
 
@@ -298,13 +291,9 @@
     padding: 0.5rem;
   }
 
-  .today .entry .info {
-    width: 100%;
+  .today .entry .type {
     font-size: 0.75rem;
-  }
-
-  .today .entry .info .type {
-    font-size: 0.75rem;
+    width: auto;
   }
 
   .today .entry .user {

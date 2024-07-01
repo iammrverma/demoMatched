@@ -54,37 +54,6 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("email").innerHTML = name;
   document.getElementById("date").innerHTML = getDate();
   console.log(name, email, department);
-  if (department === "cfo") {
-    fetch("http://127.0.0.1:3000/api/entries", {
-      method: "GET",
-      headers: {
-        "x-department": department,
-        "x-email": email,
-      },
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Unauthorized");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        if (Array.isArray(data)) {
-          const entriesDiv = document.getElementById("entries");
-          entriesDiv.innerHTML = "";
-          data.forEach((entry) => {
-            const entryElement = document.createElement("div");
-            entryElement.textContent = `Type: ${entry.type}, Amount: ${entry.amount}, Date: ${entry.entry_date}`;
-            entriesDiv.appendChild(entryElement);
-          });
-        } else {
-          console.error("Data is not an array:", data);
-        }
-      })
-      .catch((error) => {
-        console.error("Error fetching entries:", error);
-      });
-  }
 
   document
     .getElementById("entryForm")
@@ -93,11 +62,11 @@ document.addEventListener("DOMContentLoaded", function () {
       const accountNumber = document.getElementById("accountNumber").value;
       console.log(accountNumber);
       const entry_map = {
-        "Advice Sum": document.getElementById("advice").value,
+        "Advices Updated": document.getElementById("advice-updated").value,
         "Purchase Voucher Sum":
           document.getElementById("purchase-voucher").value,
-        "Tax Advice Raised Sum":
-          document.getElementById("tax-advice-raised").value,
+        "Tax Invoices":
+          document.getElementById("tax-invoice").value,
         "Previous Day Debtors":
           document.getElementById("debtors-previous").value,
         "Today's Debtors": document.getElementById("debtors-today").value,
@@ -126,9 +95,9 @@ document.addEventListener("DOMContentLoaded", function () {
                 confirmButton: "custom-confirm-button",
               },
             });
-            document.getElementById("advice").value = "";
+            document.getElementById("advice-updated").value = "";
             document.getElementById("purchase-voucher").value = "";
-            document.getElementById("tax-advice-raised").value = "";
+            document.getElementById("tax-invoice").value = "";
             document.getElementById("debtors-previous").value = "";
             document.getElementById("debtors-today").value = "";
             document.getElementById("creditors-previous").value = "";

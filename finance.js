@@ -67,7 +67,7 @@ document.addEventListener("DOMContentLoaded", function () {
         make_request(
           department,
           email,
-          "funds received",
+          "Funds Received",
           fundsReceived,
           getDate(),
           accountNumber
@@ -75,7 +75,7 @@ document.addEventListener("DOMContentLoaded", function () {
         make_request(
           department,
           email,
-          "funds sent",
+          "Funds Sent",
           fundsSent,
           getDate(),
           accountNumber
