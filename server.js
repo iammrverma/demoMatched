@@ -131,7 +131,10 @@ app.post("/api/entries", (req, res) => {
       }
     );
 });
-
+app.listen(PORT, () => {
+  console.log(`Server started on http://localhost:${PORT}`);
+});
+/*
 // Endpoint to request access
 app.post("/api/requestAccess", (req, res) => {
   const { department, email } = req.body;
@@ -190,7 +193,4 @@ app.get("/api/accessRequests", checkAccess, (req, res) => {
     res.status(403).json({ error: "Unauthorized" });
   }
 });
-
-app.listen(PORT, () => {
-  console.log(`Server started on http://localhost:${PORT}`);
-});
+*/
