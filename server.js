@@ -4,6 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const jwt = require("jsonwebtoken");
+const { log, error } = require("console");
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -33,6 +34,7 @@ db.connect((err) => {
 // Middleware to authenticate JWT
 function authenticateToken(req, res, next) {
   const authHeader = req.headers["authorization"];
+  console.log(authHeader);
   const token = authHeader && authHeader.split(" ")[1];
   if (!token) {
     console.log("No token found");
@@ -71,6 +73,23 @@ app.post("/api/verifyAccess", (req, res) => {
   });
 });
 
+// Middleware to authenticate JWT
+function authenticateToken(req, res, next) {
+  const authHeader = req.headers["authorization"];
+  const token = authHeader && authHeader.split(" ")[1];
+  if (!token) {
+    return res.status(401).json({ error: "Unauthorized" });
+  }
+
+  jwt.verify(token, SECRET_KEY, (err, user) => {
+    if (err) {
+      return res.status(403).json({ error: "Forbidden" });
+    }
+    req.user = user;
+    next();
+  });
+}
+// Endpoint to fetch entries (restricted to CFO)
 // Endpoint to fetch entries (restricted to CFO)
 app.get("/api/entries", authenticateToken, (req, res) => {
   const { department } = req.user;
@@ -90,7 +109,11 @@ app.get("/api/entries", authenticateToken, (req, res) => {
 });
 
 app.post("/api/entries", authenticateToken, (req, res) => {
-  const { department, mailid, type, amount, entry_date, accountNumber } = req.body;
+  const { department } = req.user;
+  if (department !== "finance" && department !== "accounts") {
+    return res.status(403).json({ error: "Forbidden" });
+  }
+  const { mailid, type, amount, entry_date, accountNumber } = req.body;
   const sql = "INSERT INTO entries (department, mailid, type, amount, entry_date, acc_number) VALUES (?, ?, ?, ?, ?, ?)";
   db.query(sql, [department, mailid, type, amount, entry_date, accountNumber], (err, result) => {
     if (err) {
@@ -101,6 +124,7 @@ app.post("/api/entries", authenticateToken, (req, res) => {
     res.json({ success: true, message: "Entry added successfully", id: result.insertId });
   });
 });
+
 
 app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);
