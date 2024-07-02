@@ -57,14 +57,37 @@
   font-family: "Poppins", sans-serif;
   font-style: italic;
   color: var(--color3);
+  align-items: baseline;
+  padding: 0 .25rem;
+  border-radius: .25rem;
 }
-.nav .info .date {
-  font-family: "Merriweather", serif;
+.info.focus{
+  border-bottom: 3px solid var(--primary);
+  box-shadow: 0 0 2px 2px var(--color3);
 }
-.nav .info div {
-  margin: 0 0.25rem;
+.nav .info .email{
+  display: flex;
+  flex-wrap: nowrap;
 }
-
+#user{
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid transparent;
+  text-align: center;
+  border-radius: 50%;
+  margin-right: .15rem;
+  transition: all .3s ease;
+  cursor: pointer;
+  color: var(--primary);
+}
+#user:hover{
+  border: 3px solid var(--color3);
+  background-color: var(--color3);
+  color: white;
+}
+.nav h2 {
+  text-wrap: nowrap;
+}
 .container {
   width: 80%;
   margin: auto;
@@ -118,7 +141,7 @@ input[type="number"]::-webkit-inner-spin-button {
   -webkit-appearance: none;
   margin: 0;
 }
-input {
+#entryForm input {
   border: 2px solid var(--primary);
   padding: 0.25rem 0.5rem;
   border-radius: 1.5rem;
@@ -130,6 +153,7 @@ input:focus {
   outline: none;
   box-shadow: 0 0 2px 2px var(--color3);
 }
+
 #accountNumber {
   background-color: var(--primary);
   color: white;

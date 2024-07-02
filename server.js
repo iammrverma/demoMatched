@@ -124,6 +124,41 @@ app.post("/api/entries", authenticateToken, (req, res) => {
     res.json({ success: true, message: "Entry added successfully", id: result.insertId });
   });
 });
+app.post("/api/changePassword", authenticateToken, (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const { email } = req.user;
+
+  // First, verify the current password
+  const sqlSelect = "SELECT password FROM users WHERE email = ?";
+  db.query(sqlSelect, [email], (err, result) => {
+    if (err) {
+      console.error("Error executing query:", err);
+      return res.status(500).json({ error: "Internal server error" });
+    }
+
+    if (result.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const storedPassword = result[0].password;
+    // Compare storedPassword with currentPassword (use your own secure comparison method)
+
+    // For demonstration, assuming storedPassword is stored in plain text (which is not recommended)
+    if (currentPassword !== storedPassword) {
+      return res.status(401).json({ error: "Current password is incorrect" });
+    }
+
+    // Update the password in the database
+    const sqlUpdate = "UPDATE users SET password = ? WHERE email = ?";
+    db.query(sqlUpdate, [newPassword, email], (err, result) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+      res.json({ success: true, message: "Password changed successfully" });
+    });
+  });
+});
 
 
 app.listen(PORT, () => {
