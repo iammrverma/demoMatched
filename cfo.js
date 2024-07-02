@@ -1,10 +1,3 @@
-function getQueryParams() {
-  const params = new URLSearchParams(window.location.search);
-  return {
-    name: params.get("name"),
-    email: params.get("email"),
-  };
-}
 function getDate() {
   const currentDate = new Date();
 
@@ -65,7 +58,7 @@ function handleRequestAction(requestId, action, requestElement, requestDepartmen
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("token");
   if (!token) {
-    window.location.href = "login.html"; 
+    window.location.href = "index.html"; 
   }
   const decodedToken = jwt_decode(token);
   const email = decodedToken.email;
@@ -84,7 +77,6 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById("accountNumber").addEventListener("change", function (event) {
     const selectedValue = event.target.value;
-    const department = "cfo"; // Set the department as "cfo" for access
 
     fetch("http://127.0.0.1:3000/api/entries", {
       method: "GET",
