@@ -24,18 +24,18 @@ document.addEventListener("DOMContentLoaded", function () {
     const fundsSent = document.getElementById("fundsSent").value;
     const accountNumber = document.getElementById("accountNumber").value;
 
-    make_request("finance", email, "funds received", fundsReceived, getDate(), accountNumber);
-    make_request("finance", email, "funds sent", fundsSent, getDate(), accountNumber);
+    make_request(email, "funds received", fundsReceived, getDate(), accountNumber);
+    make_request(email, "funds sent", fundsSent, getDate(), accountNumber);
   });
 
-  function make_request(department, mailid, type, amount, entry_date, accountNumber) {
+  function make_request(mailid, type, amount, entry_date, accountNumber) {
     fetch("http://127.0.0.1:3000/api/entries", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
         "Authorization": `Bearer ${token}`,
       },
-      body: JSON.stringify({ department, mailid, type, amount, entry_date, accountNumber }),
+      body: JSON.stringify({mailid, type, amount, entry_date, accountNumber }),
     })
       .then((response) => {
         if (!response.ok) {

@@ -63,13 +63,15 @@ function handleRequestAction(requestId, action, requestElement, requestDepartmen
 
 
 document.addEventListener("DOMContentLoaded", function () {
-  const { email } = getQueryParams();
-  const department = "cfo";
+  const token = localStorage.getItem("token");
+  if (!token) {
+    window.location.href = "login.html"; 
+  }
+  const decodedToken = jwt_decode(token);
+  const email = decodedToken.email;
 
-  document.getElementById("date").innerHTML = getDate();
+  document.getElementById("email").innerHTML = email;
 
-  console.log("Name: ", name);
-  console.log("Email: ", email);
   let fundsReceived,
     fundsSent,
     adviceUpdated,
@@ -88,7 +90,7 @@ document.addEventListener("DOMContentLoaded", function () {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "x-department": department,
+        "Authorization": `Bearer ${token}`,
       },
     })
       .then((response) => {

@@ -1,17 +1,7 @@
-function getQueryParams() {
-  const params = new URLSearchParams(window.location.search);
-  return {
-    name: params.get("name"),
-    email: params.get("email"),
-  };
-}
-
 function getDate() {
   const currentDate = new Date();
-
-  // Get the current date components
   const year = currentDate.getFullYear();
-  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
+  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); //zero-based months
   const day = currentDate.getDate().toString().padStart(2, "0");
 
   return `${year}-${month}-${day}`;
@@ -45,7 +35,7 @@ document.addEventListener("DOMContentLoaded", function () {
       for (const key in entry_map) {
         if (entry_map.hasOwnProperty(key)) {
           try {
-            make_request("accounts",email,key,entry_map[key],getDate(),accountNumber);
+            make_request(email,key,entry_map[key],getDate(),accountNumber);
             Swal.fire({
               icon: "success",
               title: "Success",
@@ -76,14 +66,14 @@ document.addEventListener("DOMContentLoaded", function () {
       }
     });
 
-    function make_request(department, mailid, type, amount, entry_date, accountNumber) {
+    function make_request(mailid, type, amount, entry_date, accountNumber) {
       fetch("http://127.0.0.1:3000/api/entries", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
           "Authorization": `Bearer ${token}`,
         },
-        body: JSON.stringify({ department, mailid, type, amount, entry_date, accountNumber }),
+        body: JSON.stringify({ mailid, type, amount, entry_date, accountNumber }),
       })
         .then((response) => {
           if (!response.ok) {
