@@ -1,6 +1,4 @@
-document
-.getElementById("loginForm")
-.addEventListener("submit", function (event) {
+document.getElementById("loginForm").addEventListener("submit", function (event) {
   event.preventDefault();
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
@@ -12,23 +10,33 @@ document
     },
     body: JSON.stringify({ email, password }),
   })
-    .then((response) => response.json())
+    .then((response) => {
+      if (!response.ok) {
+        throw new Error("Network response was not ok");
+      }
+      return response.json();
+    })
     .then((data) => {
       if (data.accessGranted) {
+        localStorage.setItem("token", data.token);
         const departmentUrlMap = {
           finance: "finance.html",
           accounts: "accounts.html",
           cfo: "cfo.html",
         };
-        // Redirect to the department page with email and name as query parameters
-      window.location.href = `${departmentUrlMap[data.department]}?email=${encodeURIComponent(email)}`;
+        const redirectUrl = departmentUrlMap[data.department];
+        if (redirectUrl) {
+          window.location.href = redirectUrl;
+        } else {
+          throw new Error("Invalid department received");
+        }
       } else {
         Swal.fire({
           icon: "error",
           title: "Error",
           text: "Unauthorized User",
-          confirmButtonText: "Ok", 
-          cancelButtonText: "Cancel", 
+          confirmButtonText: "Ok",
+          cancelButtonText: "Cancel",
           customClass: {
             popup: "custom-popup",
             title: "custom-title",
@@ -37,5 +45,18 @@ document
         });
       }
     })
-    .catch((error) => console.error("Error verifying access:", error));
+    .catch((error) => {
+      console.error("Error verifying access:", error);
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Failed to login. Please try again later.",
+        confirmButtonText: "Ok",
+        customClass: {
+          popup: "custom-popup",
+          title: "custom-title",
+          confirmButton: "custom-confirm-button",
+        },
+      });
+    });
 });

@@ -5,38 +5,7 @@ function getQueryParams() {
     email: params.get("email"),
   };
 }
-function make_request(
-  department,
-  mailid,
-  type,
-  amount,
-  entry_date,
-  accountNumber
-) {
-  fetch("http://127.0.0.1:3000/api/entries", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({department ,mailid, type, amount, entry_date, accountNumber}),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        return response.json().then((error) => {
-          throw new Error(error.error || "Unknown error occurred");
-        });
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log("Entry added successfully:", data);
-      // Handle the successful response, e.g., show a success message or redirect
-    })
-    .catch((error) => {
-      console.error("Error adding entry:", error);
-      // Handle errors, e.g., show an error message
-    });
-}
+
 function getDate() {
   const currentDate = new Date();
 
@@ -48,19 +17,18 @@ function getDate() {
   return `${year}-${month}-${day}`;
 }
 document.addEventListener("DOMContentLoaded", function () {
-  const { name, email } = getQueryParams();
-  const department = "accounts";
-  document.getElementById("name").innerHTML = email;
-  document.getElementById("email").innerHTML = name;
-  document.getElementById("date").innerHTML = getDate();
-  console.log(name, email, department);
+  const token = localStorage.getItem("token");
+  if(!token) window.location.href = "login.html";
 
-  document
-    .getElementById("entryForm")
-    .addEventListener("submit", function (event) {
+  const decodedToken = jwt_decode(token);
+  const email = decodedToken.email;
+
+  document.getElementById("email").innerHTML = email;
+  document.getElementById("date").innerHTML = getDate();
+
+  document.getElementById("entryForm").addEventListener("submit", function (event) {
       event.preventDefault();
       const accountNumber = document.getElementById("accountNumber").value;
-      console.log(accountNumber);
       const entry_map = {
         "Advices Updated": document.getElementById("advice-updated").value,
         "Purchase Voucher Sum":
@@ -74,17 +42,11 @@ document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("creditors-previous").value,
         "Today's Creditors": document.getElementById("creditors-today").value,
       };
+
       for (const key in entry_map) {
         if (entry_map.hasOwnProperty(key)) {
           try {
-            make_request(
-              department,
-              email,
-              key,
-              entry_map[key],
-              getDate(),
-              accountNumber
-            );
+            make_request("accounts",email,key,entry_map[key],getDate(),accountNumber);
             Swal.fire({
               icon: "success",
               title: "Success",
@@ -114,4 +76,43 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     });
+
+    function make_request(department, mailid, type, amount, entry_date, accountNumber) {
+      fetch("http://127.0.0.1:3000/api/entries", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          "Authorization": `Bearer ${token}`,
+        },
+        body: JSON.stringify({ department, mailid, type, amount, entry_date, accountNumber }),
+      })
+        .then((response) => {
+          if (!response.ok) {
+            return response.json().then((error) => {
+              throw new Error(error.error || "Unknown error occurred");
+            });
+          }
+          return response.json();
+        })
+        .then((data) => {
+          Swal.fire({
+            icon: "success",
+            title: "Success",
+            text: "Entry Made Successfully",
+            customClass: {
+              popup: "custom-popup",
+              title: "custom-title",
+              confirmButton: "custom-confirm-button",
+            },
+          });
+        })
+        .catch((error) => {
+          console.error("Error adding entry:", error);
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "An error occurred while making the entry",
+          });
+        });
+    }
 });
