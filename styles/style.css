@@ -12,7 +12,7 @@
 .header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
+  align-items: center;
   font-family: "Poppins", sans-serif;
   font-weight: 900;
   font-size: 2.5rem;
@@ -21,13 +21,19 @@
   color: var(--primary);
   padding: 0.5rem 1rem;
 }
+.header a{
+  text-decoration: none;
+  color: var(--primary);
+}
 .header .logo {
   width: 3rem;
+  height: 3rem;
   overflow: hidden;
 }
 .header .logo img {
-  object-fit: contain;
+  /* object-fit: contain; */
   width: 100%;
+  height: 100%;
 }
 .container {
   width: 80%;
@@ -127,7 +133,25 @@ button:hover {
   border-radius: 0.25rem;
   padding: 0.35rem 0.65rem;
 }
+
+@media only screen and (max-width:720px) {
+  .header {
+    font-size: 1.5rem;
+  }
+  .header .logo{
+    width: 2rem;
+    height: 2rem;
+  }
+}
+
 @media only screen and (max-width: 430px) {
+  .header {
+    font-size: 1.5rem;
+  }
+  .header .logo{
+    width: 2rem;
+    height: 2rem;
+  }
   .container {
     width: 100%;
     box-shadow: none;
@@ -135,5 +159,15 @@ button:hover {
   }
   .inputs input {
     width: 100%;
+  }
+}
+
+@media only screen and (max-width: 360px){
+  .header{
+    font-size: 1.2rem;
+  }
+  .header .logo{
+    width: 1.5rem;
+    height: 1.5rem;
   }
 }

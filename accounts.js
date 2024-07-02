@@ -24,7 +24,6 @@ document.addEventListener("DOMContentLoaded", function () {
   const email = decodedToken.email;
 
   document.getElementById("email").innerHTML = email;
-  document.getElementById("date").innerHTML = getDate();
 
   document.getElementById("entryForm").addEventListener("submit", function (event) {
       event.preventDefault();
