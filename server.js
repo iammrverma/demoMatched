@@ -144,9 +144,6 @@ app.post("/api/changePassword", authenticateToken, (req, res) => {
     }
 
     const storedPassword = result[0].password;
-    // Compare storedPassword with currentPassword (use your own secure comparison method)
-
-    // For demonstration, assuming storedPassword is stored in plain text (which is not recommended)
     if (currentPassword !== storedPassword) {
       return res.status(401).json({ error: "Current password is incorrect" });
     }
@@ -180,6 +177,49 @@ app.get("/api/users", authenticateToken, (req, res) => {
     res.status(403).json({ error: "Unauthorized" });
   }
 });
+
+// Endpoint to delete user from data base 
+app.delete("/api/user", authenticateToken, (req, res) => {
+  const { department } = req.user;
+  const { userId } = req.body; 
+
+  if (department === "cfo") {
+    const sql = "DELETE FROM users WHERE id = ?";
+    db.query(sql, [userId], (err, result) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+
+      if (result.affectedRows === 0) {
+        return res.status(404).json({ error: "User not found" });
+      }
+
+      res.json({ success: true, message: "User deleted successfully" });
+    });
+  } else {
+    res.status(403).json({ error: "Unauthorized" });
+  }
+});
+
+app.post("/api/users", authenticateToken, (req, res) => {
+  const { department } = req.user;
+  const { userDepartment, mailid, password } = req.body;
+
+  if (department === "cfo") {
+    const sql = "INSERT INTO users (department, email, password) VALUES (?, ?, ?)";
+    db.query(sql, [userDepartment, mailid, password], (err, result) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+      res.json({ success: true, message: "User added successfully", id: result.insertId });
+    });
+  } else {
+    res.status(403).json({ error: "Unauthorized" });
+  }
+});
+
 
 app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);
