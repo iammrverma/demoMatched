@@ -15,7 +15,7 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
     integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
     crossorigin="anonymous" referrerpolicy="no-referrer" />
-
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css" />
   <title>CFO</title>
   <link rel="stylesheet" href="styles/cfo.css" />
   <link rel="icon" href="assets/logo.ico" />
@@ -44,28 +44,28 @@
     <div class="feild">
       <span class="name">Change in debtors</span>
       <span class="amount" id="debtor-change">
-        <i class="fa-solid fa-indian-rupee-sign"></i> 
+        <i class="fa-solid fa-indian-rupee-sign"></i>
         000/-
       </span>
     </div>
     <div class="feild">
       <span class="name">Change in Creditors</span>
       <span class="amount" id="creditor-change">
-        <i class="fa-solid fa-indian-rupee-sign"></i> 
+        <i class="fa-solid fa-indian-rupee-sign"></i>
         000/-
       </span>
     </div>
     <div class="feild">
       <span class="name">Net Difference Payables</span>
       <span class="amount" id="net-difference-payables">
-        <i class="fa-solid fa-indian-rupee-sign"></i> 
+        <i class="fa-solid fa-indian-rupee-sign"></i>
         000/-
       </span>
     </div>
     <div class="feild">
       <span class="name">Net Difference Receivables</span>
       <span class="amount" id="net-difference-receivables">
-        <i class="fa-solid fa-indian-rupee-sign"></i> 
+        <i class="fa-solid fa-indian-rupee-sign"></i>
         000/-
       </span>
     </div>
@@ -73,7 +73,10 @@
   <div class="today">
     <div class="heading">
       <h2>Today's Entries</h2>
-      <div id="email">date</div>
+      <div class="user-info">
+        <div id="user"><i class="fa-solid fa-user"></i></div>
+        <div id="email">date</div>
+      </div>
     </div>
     <div id="entries"></div>
   </div>
@@ -89,6 +92,7 @@
     <div id="bell" class="hidden"><i class="fa-regular fa-bell"></i></div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
   <script src="cfo.js"></script>
 </body>
 

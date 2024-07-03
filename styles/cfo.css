@@ -161,6 +161,41 @@
   text-wrap: nowrap;
 }
 
+.user-info{
+  display: flex;
+  font-size: 0.85rem;
+  font-family: "Poppins", sans-serif;
+  font-style: italic;
+  color: var(--color3);
+  align-items: baseline;
+  padding: 0 .25rem;
+  border-radius: .25rem;
+}
+.user-info.focus{
+  border-bottom: 3px solid var(--primary);
+  box-shadow: 0 0 2px 2px var(--color3);
+}
+.user-info .email{
+  display: flex;
+  flex-wrap: nowrap;
+}
+#user{
+  width: 1.5rem;
+  height: 1.5rem;
+  border: 3px solid transparent;
+  text-align: center;
+  border-radius: 50%;
+  margin-right: .15rem;
+  transition: all .3s ease;
+  cursor: pointer;
+  color: var(--primary);
+}
+#user:hover{
+  border: 3px solid var(--color3);
+  background-color: var(--color3);
+  color: white;
+}
+
 #entries .entry {
   display: flex;
   padding: 0.5rem 1rem;
