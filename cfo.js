@@ -212,7 +212,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById('user').addEventListener("click", (e) => {
     console.log("click");
-    document.getElementsByClassName("user-info")[0].classList.add("focus");
+    const userInfo = document.getElementsByClassName("user-info")[0];
+    userInfo.classList.add("focus");
   
     let currentPasswordInput = document.createElement("input");
     currentPasswordInput.type = "password";
@@ -227,16 +228,18 @@ document.addEventListener("DOMContentLoaded", function () {
     newPasswordInput.id = "newPasswordInput";
     newPasswordInput.style.border = 'none';
     newPasswordInput.style.outline = 'none';
-    
-    let close =document.createElement("span");
+  
+    let close = document.createElement("span");
     close.style.setProperty("color", "var(--primary)");
     close.id = "close";
     close.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
-    close.addEventListener("click", (e)=>{
-      document.getElementsByClassName("user-info")[0].classList.remove("focus");
+    close.addEventListener("click", (e) => {
+      userInfo.classList.remove("focus");
       emailEle.innerHTML = "";
       emailEle.innerHTML = email;
+      document.removeEventListener("click", outsideClickListener);
     });
+  
     const emailEle = document.getElementById("email");
     emailEle.innerHTML = "";
     emailEle.appendChild(currentPasswordInput);
@@ -249,15 +252,30 @@ document.addEventListener("DOMContentLoaded", function () {
       if (e.key === "Enter") {
         const currentPassword = currentPasswordInput.value;
         const newPassword = newPasswordInput.value;
-        if (newPassword){
-          changePassword(currentPassword, newPassword); 
-          document.getElementsByClassName("user-info")[0].classList.remove("focus");
+        if (newPassword) {
+          changePassword(currentPassword, newPassword);
+          userInfo.classList.remove("focus");
           emailEle.innerHTML = "";
           emailEle.innerHTML = email;
+          document.removeEventListener("click", outsideClickListener);
         }
       }
     });
+  
+    // Define the outside click listener
+    function outsideClickListener(event) {
+      if (!userInfo.contains(event.target) && event.target.id !== 'user') {
+        userInfo.classList.remove("focus");
+        emailEle.innerHTML = "";
+        emailEle.innerHTML = email;
+        document.removeEventListener("click", outsideClickListener);
+      }
+    }
+  
+    // Add the outside click listener
+    document.addEventListener("click", outsideClickListener);
   });
+  
 
   document.getElementById("bell").addEventListener("click", function (event) {
     const notificationBox = document.getElementById("notification");

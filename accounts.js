@@ -95,7 +95,8 @@ document.addEventListener("DOMContentLoaded", function () {
 
   document.getElementById('user').addEventListener("click", (e) => {
     console.log("click");
-    document.getElementsByClassName("info")[0].classList.add("focus");
+    const info = document.getElementsByClassName("info")[0];
+    info.classList.add("focus");
   
     let currentPasswordInput = document.createElement("input");
     currentPasswordInput.type = "password";
@@ -118,9 +119,10 @@ document.addEventListener("DOMContentLoaded", function () {
     close.id = "close";
     close.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
     close.addEventListener("click", (e)=>{
-      document.getElementsByClassName("info")[0].classList.remove("focus");
+      info.classList.remove("focus");
       emailEle.innerHTML = "";
       emailEle.innerHTML = email;
+      document.removeEventListener("click", outsideClickListener);
     });
     const emailEle = document.getElementById("email");
     emailEle.innerHTML = "";
@@ -136,12 +138,24 @@ document.addEventListener("DOMContentLoaded", function () {
         const newPassword = newPasswordInput.value;
         if (newPassword){
           changePassword(currentPassword, newPassword); 
-          document.getElementsByClassName("info")[0].classList.remove("focus");
+          info.classList.remove("focus");
           emailEle.innerHTML = "";
           emailEle.innerHTML = email;
+          document.removeEventListener("click", outsideClickListener);
         }
       }
     });
+    function outsideClickListener(event) {
+      if (!info.contains(event.target) && event.target.id !== 'user') {
+        info.classList.remove("focus");
+        emailEle.innerHTML = "";
+        emailEle.innerHTML = email;
+        document.removeEventListener("click", outsideClickListener);
+      }
+    }
+  
+    // Add the outside click listener
+    document.addEventListener("click", outsideClickListener);
   });
 
   document.getElementById("entryForm").addEventListener("submit", function (event) {
