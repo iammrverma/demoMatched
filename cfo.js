@@ -57,8 +57,9 @@ function handleRequestAction(requestId, action, requestElement, requestDepartmen
 
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("token");
+  console.log(token);
   if (!token) {
-    window.location.href = "index.html"; 
+    window.location.href = "index.html";
   }
   const decodedToken = jwt_decode(token);
   const email = decodedToken.email;
@@ -180,55 +181,55 @@ document.addEventListener("DOMContentLoaded", function () {
       },
       body: JSON.stringify({ currentPassword, newPassword }),
     })
-    .then((response) => {
-      if (!response.ok) {
-        return response.json().then((error) => {
-          throw new Error(error.error || "Unknown error occurred");
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            throw new Error(error.error || "Unknown error occurred");
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        Swal.fire({
+          icon: "success",
+          title: "Success",
+          text: "Password changed",
+          customClass: {
+            popup: "custom-popup",
+            title: "custom-title",
+            confirmButton: "custom-confirm-button",
+          },
         });
-      }
-      return response.json();
-    })
-    .then((data) => {
-      Swal.fire({
-        icon: "success",
-        title: "Success",
-        text: "Password changed",
-        customClass: {
-          popup: "custom-popup",
-          title: "custom-title",
-          confirmButton: "custom-confirm-button",
-        },
+      })
+      .catch((error) => {
+        console.error("Error changing password:", error);
+        Swal.fire({
+          icon: "error",
+          title: "Error",
+          text: "Try changing password later",
+        });
       });
-    })
-    .catch((error) => {
-      console.error("Error changing password:", error);
-      Swal.fire({
-        icon: "error",
-        title: "Error",
-        text: "Try changing password later",
-      });
-    });
   }
 
   document.getElementById('user').addEventListener("click", (e) => {
     console.log("click");
     const userInfo = document.getElementsByClassName("user-info")[0];
     userInfo.classList.add("focus");
-  
+
     let currentPasswordInput = document.createElement("input");
     currentPasswordInput.type = "password";
     currentPasswordInput.placeholder = "Current Password";
     currentPasswordInput.id = "currentPasswordInput";
     currentPasswordInput.style.border = 'none';
     currentPasswordInput.style.outline = 'none';
-  
+
     let newPasswordInput = document.createElement("input");
     newPasswordInput.type = "password";
     newPasswordInput.placeholder = "New Password";
     newPasswordInput.id = "newPasswordInput";
     newPasswordInput.style.border = 'none';
     newPasswordInput.style.outline = 'none';
-  
+
     let close = document.createElement("span");
     close.style.setProperty("color", "var(--primary)");
     close.id = "close";
@@ -239,15 +240,15 @@ document.addEventListener("DOMContentLoaded", function () {
       emailEle.innerHTML = email;
       document.removeEventListener("click", outsideClickListener);
     });
-  
+
     const emailEle = document.getElementById("email");
     emailEle.innerHTML = "";
     emailEle.appendChild(currentPasswordInput);
     emailEle.appendChild(newPasswordInput);
     emailEle.appendChild(close);
-  
+
     currentPasswordInput.focus(); // Focus the current password input
-  
+
     newPasswordInput.addEventListener("keydown", (e) => {
       if (e.key === "Enter") {
         const currentPassword = currentPasswordInput.value;
@@ -261,7 +262,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
       }
     });
-  
+
     // Define the outside click listener
     function outsideClickListener(event) {
       if (!userInfo.contains(event.target) && event.target.id !== 'user') {
@@ -271,30 +272,72 @@ document.addEventListener("DOMContentLoaded", function () {
         document.removeEventListener("click", outsideClickListener);
       }
     }
-  
+
     // Add the outside click listener
     document.addEventListener("click", outsideClickListener);
   });
-  
 
-  document.getElementById("bell").addEventListener("click", function (event) {
+
+  document.getElementById("gear").addEventListener("click", function (event) {
     const notificationBox = document.getElementById("notification");
     const header = document.getElementById("header");
+    const financeUsers = document.getElementById("financeUsers");
+    const accountsUsers = document.getElementById("accountsUsers");
+
     notificationBox.classList.add("open");
     header.style.display = "flex";
+    console.log(token);
+    fetch("http://127.0.0.1:3000/api/users", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Authorization": `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            throw new Error(error.error || "Unknown error occurred");
+          });
+        }
+        return response.json();
+      })
+      .then((data) => {
+        financeUsers.innerHTML = "";
+        accountsUsers.innerHTML = "";
+        data.forEach(user => {
+          const userEle = document.createElement("div");
+          userEle.className = "userEle";
+          userEle.innerHTML = `
+            <div class="userEmail">${user.email}</div>
+            <span class="del" data-id="${user.id}"><i class="fa-solid fa-xmark"></i></span>
+          `
+          if (user.department === "finance") {
+            financeUsers.append(userEle)
+          } else if (user.department === "accounts") {
+            accountsUsers.append(userEle);
+          }
+        });
+      })
+      .catch((error) => console.error("Error fetching entries:", error));
 
-    document.querySelector("#bell").classList.add("hidden");
-    document.querySelector("#notification_badge").classList.add("hidden");
-    document.querySelector("#requests").classList.remove("hidden");
+    document.querySelector("#gear").classList.add("hidden");
+    document.querySelector("#allUsers").style.display = "grid";
+
+
+    document.getElementById("close").addEventListener("click", () => {
+      const notificationBox = document.getElementById("notification");
+      const header = document.getElementById("header");
+      notificationBox.classList.remove("open");
+      header.style.display = "none";
+
+      document.getElementById("gear").classList.remove("hidden");
+
+      // document.querySelector("#financeUsers").innerHTML = "";
+      // document.querySelector("#accountsUsers").innerHTML = "";
+      document.querySelector("#allUsers").style.display = "none";
+    });
+
   });
 
-  document.getElementById("close").addEventListener("click", () => {
-    const notificationBox = document.getElementById("notification");
-    const header = document.getElementById("header");
-    notificationBox.classList.remove("open");
-    header.style.display = "none";
-
-    document.getElementById("bell").classList.remove("hidden");
-    document.querySelector("#requests").classList.add("hidden");
-  });
 });

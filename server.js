@@ -52,7 +52,7 @@ function authenticateToken(req, res, next) {
   });
 }
 
-
+//endpoint to verify whether a user is in database or not and return its department
 app.post("/api/verifyAccess", (req, res) => {
   const { email, password } = req.body;
 
@@ -83,13 +83,13 @@ function authenticateToken(req, res, next) {
 
   jwt.verify(token, SECRET_KEY, (err, user) => {
     if (err) {
+      console.log(err);
       return res.status(403).json({ error: "Forbidden" });
     }
     req.user = user;
     next();
   });
 }
-// Endpoint to fetch entries (restricted to CFO)
 // Endpoint to fetch entries (restricted to CFO)
 app.get("/api/entries", authenticateToken, (req, res) => {
   const { department } = req.user;
@@ -108,6 +108,7 @@ app.get("/api/entries", authenticateToken, (req, res) => {
   }
 });
 
+//Endpont to post entriees restricted to finance and accounts
 app.post("/api/entries", authenticateToken, (req, res) => {
   const { department } = req.user;
   if (department !== "finance" && department !== "accounts") {
@@ -124,6 +125,8 @@ app.post("/api/entries", authenticateToken, (req, res) => {
     res.json({ success: true, message: "Entry added successfully", id: result.insertId });
   });
 });
+
+//Endpoint to change pasword
 app.post("/api/changePassword", authenticateToken, (req, res) => {
   const { currentPassword, newPassword } = req.body;
   const { email } = req.user;
@@ -160,6 +163,23 @@ app.post("/api/changePassword", authenticateToken, (req, res) => {
   });
 });
 
+//Endpoint to get users all users
+app.get("/api/users", authenticateToken, (req, res) => {
+  const { department } = req.user;
+  if (department == "cfo") {
+    const sql = "SELECT * FROM users";
+    db.query(sql, (err, result) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        res.status(500).json({ error: "Internal server error" });
+        return;
+      }
+      res.json(result);
+    });
+  } else {
+    res.status(403).json({ error: "Unauthorized" });
+  }
+});
 
 app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);
