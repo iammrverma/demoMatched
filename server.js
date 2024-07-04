@@ -4,7 +4,7 @@ const bodyParser = require("body-parser");
 const cors = require("cors");
 const path = require("path");
 const jwt = require("jsonwebtoken");
-const { log, error } = require("console");
+const bcrypt = require("bcrypt"); // Import bcrypt
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -19,7 +19,7 @@ app.use(express.static("public"));
 const db = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "mysql@3t",
+  password: "mysql@3t", // Mysql@1
   database: "matched",
 });
 
@@ -52,44 +52,90 @@ function authenticateToken(req, res, next) {
   });
 }
 
-//endpoint to verify whether a user is in database or not and return its department
+// Endpoint to verify whether a user is in the database or not and return their department
 app.post("/api/verifyAccess", (req, res) => {
   const { email, password } = req.body;
 
-  const sql = `SELECT department FROM users WHERE email = ? AND password = ?`;
-  db.query(sql, [email, password], (err, result) => {
+  const sql = `SELECT department, password FROM users WHERE email = ?`;
+  db.query(sql, [email], async (err, result) => {
     if (err) {
       console.error("Error executing query:", err);
       res.status(500).json({ error: "Internal server error" });
       return;
     }
     if (result.length > 0) {
-      const { department } = result[0];
-      const token = jwt.sign({ email, department }, SECRET_KEY, { expiresIn: TOKEN_EXPIRATION });
-      res.json({ accessGranted: true, department, token });
+      const { department, password: hashedPassword } = result[0];
+      const match = await bcrypt.compare(password, hashedPassword);
+      if (match) {
+        const token = jwt.sign({ email, department }, SECRET_KEY, { expiresIn: TOKEN_EXPIRATION });
+        res.json({ accessGranted: true, department, token });
+      } else {
+        res.status(401).json({ accessGranted: false, error: "Invalid email or password" });
+      }
     } else {
       res.status(401).json({ accessGranted: false, error: "Invalid email or password" });
     }
   });
 });
 
-// Middleware to authenticate JWT
-function authenticateToken(req, res, next) {
-  const authHeader = req.headers["authorization"];
-  const token = authHeader && authHeader.split(" ")[1];
-  if (!token) {
-    return res.status(401).json({ error: "Unauthorized" });
-  }
+// Endpoint to change password
+app.post("/api/changePassword", authenticateToken, (req, res) => {
+  const { currentPassword, newPassword } = req.body;
+  const { email } = req.user;
 
-  jwt.verify(token, SECRET_KEY, (err, user) => {
+  // First, verify the current password
+  const sqlSelect = "SELECT password FROM users WHERE email = ?";
+  db.query(sqlSelect, [email], async (err, result) => {
     if (err) {
-      console.log(err);
-      return res.status(403).json({ error: "Forbidden" });
+      console.error("Error executing query:", err);
+      return res.status(500).json({ error: "Internal server error" });
     }
-    req.user = user;
-    next();
+
+    if (result.length === 0) {
+      return res.status(404).json({ error: "User not found" });
+    }
+
+    const storedPassword = result[0].password;
+    const match = await bcrypt.compare(currentPassword, storedPassword);
+    if (!match) {
+      return res.status(401).json({ error: "Current password is incorrect" });
+    }
+
+    // Hash the new password
+    const hashedNewPassword = await bcrypt.hash(newPassword, 10);
+
+    // Update the password in the database
+    const sqlUpdate = "UPDATE users SET password = ? WHERE email = ?";
+    db.query(sqlUpdate, [hashedNewPassword, email], (err, result) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+      res.json({ success: true, message: "Password changed successfully" });
+    });
   });
-}
+});
+
+// Endpoint to add a new user (restricted to CFO)
+app.post("/api/users", authenticateToken, async (req, res) => {
+  const { department } = req.user;
+  const { userDepartment, mailid, password } = req.body;
+
+  if (department === "cfo") {
+    const hashedPassword = await bcrypt.hash(password, 10); // Hash the password
+    const sql = "INSERT INTO users (department, email, password) VALUES (?, ?, ?)";
+    db.query(sql, [userDepartment, mailid, hashedPassword], (err, result) => {
+      if (err) {
+        console.error("Error executing query:", err);
+        return res.status(500).json({ error: "Internal server error" });
+      }
+      res.json({ success: true, message: "User added successfully", id: result.insertId });
+    });
+  } else {
+    res.status(403).json({ error: "Unauthorized" });
+  }
+});
+
 // Endpoint to fetch entries (restricted to CFO)
 app.get("/api/entries", authenticateToken, (req, res) => {
   const { department } = req.user;
@@ -108,7 +154,7 @@ app.get("/api/entries", authenticateToken, (req, res) => {
   }
 });
 
-//Endpont to post entriees restricted to finance and accounts
+// Endpoint to post entries restricted to finance and accounts
 app.post("/api/entries", authenticateToken, (req, res) => {
   const { department } = req.user;
   if (department !== "finance" && department !== "accounts") {
@@ -126,41 +172,7 @@ app.post("/api/entries", authenticateToken, (req, res) => {
   });
 });
 
-//Endpoint to change pasword
-app.post("/api/changePassword", authenticateToken, (req, res) => {
-  const { currentPassword, newPassword } = req.body;
-  const { email } = req.user;
-
-  // First, verify the current password
-  const sqlSelect = "SELECT password FROM users WHERE email = ?";
-  db.query(sqlSelect, [email], (err, result) => {
-    if (err) {
-      console.error("Error executing query:", err);
-      return res.status(500).json({ error: "Internal server error" });
-    }
-
-    if (result.length === 0) {
-      return res.status(404).json({ error: "User not found" });
-    }
-
-    const storedPassword = result[0].password;
-    if (currentPassword !== storedPassword) {
-      return res.status(401).json({ error: "Current password is incorrect" });
-    }
-
-    // Update the password in the database
-    const sqlUpdate = "UPDATE users SET password = ? WHERE email = ?";
-    db.query(sqlUpdate, [newPassword, email], (err, result) => {
-      if (err) {
-        console.error("Error executing query:", err);
-        return res.status(500).json({ error: "Internal server error" });
-      }
-      res.json({ success: true, message: "Password changed successfully" });
-    });
-  });
-});
-
-//Endpoint to get users all users
+// Endpoint to get all users (restricted to CFO)
 app.get("/api/users", authenticateToken, (req, res) => {
   const { department } = req.user;
   if (department == "cfo") {
@@ -178,7 +190,7 @@ app.get("/api/users", authenticateToken, (req, res) => {
   }
 });
 
-// Endpoint to delete user from data base 
+// Endpoint to delete user from database (restricted to CFO)
 app.delete("/api/user", authenticateToken, (req, res) => {
   const { department } = req.user;
   const { userId } = req.body; 
@@ -201,25 +213,6 @@ app.delete("/api/user", authenticateToken, (req, res) => {
     res.status(403).json({ error: "Unauthorized" });
   }
 });
-
-app.post("/api/users", authenticateToken, (req, res) => {
-  const { department } = req.user;
-  const { userDepartment, mailid, password } = req.body;
-
-  if (department === "cfo") {
-    const sql = "INSERT INTO users (department, email, password) VALUES (?, ?, ?)";
-    db.query(sql, [userDepartment, mailid, password], (err, result) => {
-      if (err) {
-        console.error("Error executing query:", err);
-        return res.status(500).json({ error: "Internal server error" });
-      }
-      res.json({ success: true, message: "User added successfully", id: result.insertId });
-    });
-  } else {
-    res.status(403).json({ error: "Unauthorized" });
-  }
-});
-
 
 app.listen(PORT, () => {
   console.log(`Server started on http://localhost:${PORT}`);
