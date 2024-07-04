@@ -2,6 +2,7 @@
   margin: 0;
   padding: 0;
   box-sizing: border-box;
+  font-family: "Poppins", sans-serif;
 }
 :root {
   --primary: #de4a48;
@@ -13,7 +14,6 @@
   display: flex;
   justify-content: space-between;
   align-items: center;
-  font-family: "Poppins", sans-serif;
   font-weight: 900;
   font-size: 2.5rem;
   font-style: italic;
@@ -44,7 +44,6 @@
   width: 80%;
   margin: auto;
   padding: 0.5rem;
-  font-family: "Poppins", sans-serif;
   font-weight: 400;
   color: var(--primary);
 }
@@ -54,7 +53,6 @@
 .nav .info {
   display: flex;
   font-size: 0.85rem;
-  font-family: "Poppins", sans-serif;
   font-style: italic;
   color: var(--color3);
   align-items: baseline;
@@ -106,7 +104,6 @@ input[type="number"]::-webkit-inner-spin-button {
   justify-content: center;
   flex-direction: column;
   font-size: 1.25rem;
-  font-family: "Poppins", sans-serif;
 }
 .form-group {
   justify-content: space-between;
@@ -127,7 +124,6 @@ input[type="number"] {
   color: var(--color3);
   letter-spacing: 2px;
   font-size: 0.85rem;
-  font-family: "Merriweather", serif;
 }
 input[type="number"]:focus {
   box-shadow: 0 0 2px 2px var(--color3);
@@ -142,7 +138,6 @@ input[type="number"]:focus {
   font-size: 1rem;
   cursor: pointer;
   transition: all 0.3s ease;
-  font-family: "Poppins", sans-serif;
 }
 
 #accountNumber option {
@@ -169,7 +164,6 @@ button {
   border: none;
   border-radius: 0.5rem;
   cursor: pointer;
-  font-family: "Poppins", sans-serif;
 }
 button:hover,
 button:focus {
