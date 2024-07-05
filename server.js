@@ -1,3 +1,4 @@
+require('dotenv').config();
 const express = require("express");
 const mysql = require("mysql");
 const bodyParser = require("body-parser");
@@ -8,11 +9,18 @@ const bcrypt = require("bcrypt");
 const helmet = require("helmet"); // Import helmet for security
 const rateLimit = require("express-rate-limit"); // Import rate-limit for rate limiting
 const morgan = require("morgan"); // Import morgan for logging
-
+console.log(
+  process.env.PORT,
+  process.env.SECRET_KEY,
+  process.env.DB_HOST,
+  process.env.DB_USER,
+  process.env.DB_PASSWORD,
+  process.env.DB_NAME
+);
 const app = express();
-const PORT = process.env.PORT || 3000;
-const SECRET_KEY = process.env.SECRET_KEY || "your_secret_key";
-const TOKEN_EXPIRATION = "1h";
+const PORT = process.env.PORT;//|| 3000;
+const SECRET_KEY = process.env.SECRET_KEY;// || "your_secret_key";
+const TOKEN_EXPIRATION = process.env.TOKEN_EXPIRATION;//"1h";
 
 // Use Helmet for basic security
 app.use(helmet());
@@ -35,10 +43,10 @@ app.use(express.static(path.join(__dirname, "public")));
 
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: process.env.DB_HOST || "localhost",
-  user: process.env.DB_USER || "root",
-  password: process.env.DB_PASSWORD || "mysql@3t",
-  database: process.env.DB_NAME || "matched",
+  host: process.env.DB_HOST,// || "localhost",
+  user: process.env.DB_USER,// || "root",
+  password: process.env.DB_PASSWORD,// || "mysql@3t",
+  database: process.env.DB_NAME,// || "matched",
 });
 
 const query = (sql, params) => {
