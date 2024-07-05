@@ -5,15 +5,33 @@ const cors = require("cors");
 const path = require("path");
 const jwt = require("jsonwebtoken");
 const bcrypt = require("bcrypt");
+const helmet = require("helmet"); // Import helmet for security
+const rateLimit = require("express-rate-limit"); // Import rate-limit for rate limiting
+const morgan = require("morgan"); // Import morgan for logging
 
 const app = express();
 const PORT = process.env.PORT || 3000;
 const SECRET_KEY = process.env.SECRET_KEY || "your_secret_key";
 const TOKEN_EXPIRATION = "1h";
 
+// Use Helmet for basic security
+app.use(helmet());
+
+// Rate limiting middleware to limit repeated requests to public APIs
+const limiter = rateLimit({
+  windowMs: 15 * 60 * 1000, // 15 minutes
+  max: 100, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
+  message: "Too many requests from this IP, please try again later.",
+});
+
+app.use(limiter);
+
+// Use morgan for logging
+app.use(morgan("combined"));
+
 app.use(cors());
 app.use(bodyParser.json());
-app.use(express.static("public"));
+app.use(express.static(path.join(__dirname, "public")));
 
 const pool = mysql.createPool({
   connectionLimit: 10,
@@ -126,10 +144,8 @@ app.get("/api/entries", authenticateToken, requireDepartment("cfo"), async (req,
   const todayDate = `${year}-${month}-${day}`;
 
   try {
-    // Start a transaction
     await query("START TRANSACTION");
 
-    // Move past entries to the past_entries table
     await query(`
       INSERT INTO past_entries (department, mailid, type, amount, entry_date, acc_number)
       SELECT department, mailid, type, amount, entry_date, acc_number
@@ -137,24 +153,19 @@ app.get("/api/entries", authenticateToken, requireDepartment("cfo"), async (req,
       WHERE DATE(entry_date) < ?
     `, [todayDate]);
 
-    // Delete past entries from the entries table
     await query("DELETE FROM entries WHERE DATE(entry_date) < ?", [todayDate]);
 
-    // Commit the transaction
     await query("COMMIT");
 
-    // today's entries
-    const todayEntries = await query("SELECT * FROM entries");// WHERE DATE(entry_date) = ?", [todayDate]);
+    const todayEntries = await query("SELECT * FROM entries WHERE DATE(entry_date) = ?", [todayDate]);
 
     res.json(todayEntries);
   } catch (err) {
-    // Rollback the transaction in case of an error
     await query("ROLLBACK");
     handleError(res, err);
     console.log(err);
   }
 });
-
 
 app.post("/api/entries", authenticateToken, async (req, res) => {
   const { department } = req.user;
