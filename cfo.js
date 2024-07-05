@@ -84,7 +84,10 @@ document.addEventListener("DOMContentLoaded", function () {
     .getElementById("accountNumber")
     .addEventListener("change", function (event) {
       const selectedValue = event.target.value;
-
+      const debtorChange = document.getElementById("debtor-change");
+      const creditorChange = document.getElementById("creditor-change");
+      const netDifferencePayable = document.getElementById("net-difference-payables");
+      const netDifferenceReceivable = document.getElementById("net-difference-receivables");
       fetch("http://127.0.0.1:3000/api/entries", {
         method: "GET",
         headers: {
@@ -103,12 +106,11 @@ document.addEventListener("DOMContentLoaded", function () {
         .then((data) => {
           const entries = document.getElementById("entries");
           entries.innerHTML = "";
+          let count = 0;
           data.forEach((entry) => {
-            if (
-              entry.acc_number == selectedValue &&
-              getDate() ==
-                new Date(entry.entry_date).toLocaleDateString("en-CA")
-            ) {
+            isEmpty = false;
+            if (entry.acc_number == selectedValue) {
+              count++;
               let type = entry.type;
               let badgeNumber;
               switch (type) {
@@ -152,37 +154,25 @@ document.addEventListener("DOMContentLoaded", function () {
               const entryDiv = document.createElement("div");
               entryDiv.className = "entry";
               entryDiv.innerHTML = `
-          <div class="type">${entry.type}(<i class="fa-solid fa-indian-rupee-sign"></i>)</div>
-          <div class="amount">${entry.amount} /-</div>
-          <div class="user"> ${entry.mailid} </div>
-        `;
+                <div class="type">${entry.type}(<i class="fa-solid fa-indian-rupee-sign"></i>)</div>
+                <div class="amount">${entry.amount} /-</div>
+                <div class="user"> ${entry.mailid} </div>
+              `;
               entries.appendChild(entryDiv);
             }
           });
-
-          document.getElementById(
-            "debtor-change"
-          ).innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${
-            todayDebtors - previousDebtors
-          } /-`;
-
-          document.getElementById(
-            "creditor-change"
-          ).innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${
-            todayCreditors - previousCreditors
-          } /-`;
-
-          document.getElementById(
-            "net-difference-payables"
-          ).innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${
-            purchaseVoucher - fundsSent
-          } /-`;
-
-          document.getElementById(
-            "net-difference-receivables"
-          ).innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${
-            taxInvoices - adviceUpdated
-          } /-`;
+          if (count) {
+            debtorChange.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${todayDebtors - previousDebtors} /-`;
+            creditorChange.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${todayCreditors - previousCreditors} /-`;
+            netDifferencePayable.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${purchaseVoucher - fundsSent} /-`;
+            netDifferenceReceivable.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${taxInvoices - adviceUpdated} /-`;
+          } else {
+            entries.innerHTML = "empty";
+            debtorChange.innerHTML = '---';
+            creditorChange.innerHTML = "---";
+            netDifferencePayable.innerHTML = "---";
+            netDifferenceReceivable.innerHTML = "---";
+          }
         })
         .catch((error) => console.error("Error fetching entries:", error));
     });
