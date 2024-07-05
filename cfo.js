@@ -86,8 +86,23 @@ document.addEventListener("DOMContentLoaded", function () {
       const selectedValue = event.target.value;
       const debtorChange = document.getElementById("debtor-change");
       const creditorChange = document.getElementById("creditor-change");
-      const netDifferencePayable = document.getElementById("net-difference-payables");
-      const netDifferenceReceivable = document.getElementById("net-difference-receivables");
+      const netDifferencePayable = document.getElementById(
+        "net-difference-payables"
+      );
+      const netDifferenceReceivable = document.getElementById(
+        "net-difference-receivables"
+      );
+      const entriesObj = {
+        "funds received": null,
+        "funds sent": null,
+        "Advices Updated": null,
+        "Tax Invoices": null,
+        "Purchase Voucher Sum": null,
+        "Previous Day Debtors": null,
+        "Previous Day Creditors": null,
+        "Today's Creditors": null,
+        "Today's Debtors": null,
+      };
       fetch("http://127.0.0.1:3000/api/entries", {
         method: "GET",
         headers: {
@@ -104,71 +119,74 @@ document.addEventListener("DOMContentLoaded", function () {
           return response.json();
         })
         .then((data) => {
-          const entries = document.getElementById("entries");
-          entries.innerHTML = "";
           let count = 0;
           data.forEach((entry) => {
-            isEmpty = false;
             if (entry.acc_number == selectedValue) {
+              entriesObj[entry.type] = [entry.amount, entry.mailid];
               count++;
-              let type = entry.type;
-              let badgeNumber;
-              switch (type) {
-                case "funds received":
-                  badgeNumber = 1;
-                  fundsReceived = entry.amount;
-                  break;
-                case "funds sent":
-                  badgeNumber = 2;
-                  fundsSent = entry.amount;
-                  break;
-                case "Advices Updated":
-                  badgeNumber = 3;
-                  adviceUpdated = entry.amount;
-                  break;
-                case "Purchase Voucher Sum":
-                  badgeNumber = 4;
-                  purchaseVoucher = entry.amount;
-                  break;
-                case "Tax Invoices":
-                  badgeNumber = 5;
-                  taxInvoices = entry.amount;
-                  break;
-                case "Previous Day Debtors":
-                  badgeNumber = 6;
-                  previousDebtors = entry.amount;
-                  break;
-                case "Today's Debtors":
-                  badgeNumber = 7;
-                  todayDebtors = entry.amount;
-                  break;
-                case "Previous Day Creditors":
-                  badgeNumber = 8;
-                  previousCreditors = entry.amount;
-                  break;
-                case "Today's Creditors":
-                  badgeNumber = 9;
-                  todayCreditors = entry.amount;
-                  break;
-              }
-              const entryDiv = document.createElement("div");
-              entryDiv.className = "entry";
-              entryDiv.innerHTML = `
-                <div class="type">${entry.type}(<i class="fa-solid fa-indian-rupee-sign"></i>)</div>
-                <div class="amount">${entry.amount} /-</div>
-                <div class="user"> ${entry.mailid} </div>
-              `;
-              entries.appendChild(entryDiv);
             }
           });
           if (count) {
-            debtorChange.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${todayDebtors - previousDebtors} /-`;
-            creditorChange.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${todayCreditors - previousCreditors} /-`;
-            netDifferencePayable.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${purchaseVoucher - fundsSent} /-`;
-            netDifferenceReceivable.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${taxInvoices - adviceUpdated} /-`;
+            const entries = document.getElementById("entries");
+            entries.innerHTML = "";
+            Object.entries(entriesObj).forEach(([key, value]) => {
+              const type = key;
+              const amount = value[0];
+              const mailid = value[1];
+              switch (type) {
+                case "funds received":
+                  fundsReceived = amount;
+                  break;
+                case "funds sent":
+                  fundsSent = amount;
+                  break;
+                case "Advices Updated":
+                  adviceUpdated = amount;
+                  break;
+                case "Purchase Voucher Sum":
+                  purchaseVoucher = amount;
+                  break;
+                case "Tax Invoices":
+                  taxInvoices = amount;
+                  break;
+                case "Previous Day Debtors":
+                  previousDebtors = amount;
+                  break;
+                case "Today's Debtors":
+                  todayDebtors = amount;
+                  break;
+                case "Previous Day Creditors":
+                  previousCreditors = amount;
+                  break;
+                case "Today's Creditors":
+                  todayCreditors = amount;
+                  break;
+              }
+
+              const entryDiv = document.createElement("div");
+              entryDiv.className = "entry";
+              entryDiv.innerHTML = `
+                <div class="type">${key}(<i class="fa-solid fa-indian-rupee-sign"></i>)</div>
+                <div class="amount">${amount} /-</div>
+                <div class="user"> ${mailid} </div>
+              `;
+              entries.appendChild(entryDiv);
+            });
+            debtorChange.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${
+              todayDebtors - previousDebtors
+            } /-`;
+            creditorChange.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${
+              todayCreditors - previousCreditors
+            } /-`;
+            netDifferencePayable.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${
+              purchaseVoucher - fundsSent
+            } /-`;
+            netDifferenceReceivable.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${
+              taxInvoices - adviceUpdated
+            } /-`;
           } else {
             entries.innerHTML = "empty";
-            debtorChange.innerHTML = '---';
+            debtorChange.innerHTML = "---";
             creditorChange.innerHTML = "---";
             netDifferencePayable.innerHTML = "---";
             netDifferenceReceivable.innerHTML = "---";
