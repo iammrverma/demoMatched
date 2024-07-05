@@ -1,67 +1,5 @@
-function getDate() {
-  const currentDate = new Date();
-  const year = currentDate.getFullYear();
-  const month = (currentDate.getMonth() + 1).toString().padStart(2, "0"); // Months are zero-based
-  const day = currentDate.getDate().toString().padStart(2, "0");
-
-  return `${year}-${month}-${day}`;
-}
-
-function handleRequestAction(
-  requestId,
-  action,
-  requestElement,
-  requestDepartment,
-  requestMailid
-) {
-  if (action === "accept") {
-    fetch("http://127.0.0.1:3000/api/acceptAccess", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify({ requestDepartment, requestMailid }),
-    })
-      .then((response) => {
-        if (!response.ok) {
-          throw new Error("Failed to delete request");
-        }
-        return response.json();
-      })
-      .then((data) => {
-        console.log(data);
-        requestElement.remove();
-      })
-      .catch((error) => {
-        console.error("Error accepting request:", error);
-      });
-  }
-  fetch("http://127.0.0.1:3000/api/deleteAccessRequest", {
-    method: "POST",
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify({ requestId }),
-  })
-    .then((response) => {
-      if (!response.ok) {
-        throw new Error("Failed to delete request");
-      }
-      return response.json();
-    })
-    .then((data) => {
-      console.log(data);
-      // Remove the request element from the DOM
-      requestElement.remove();
-    })
-    .catch((error) => {
-      console.error("Error deleting request:", error);
-    });
-}
-
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("token");
-  console.log(token);
   if (!token) {
     window.location.href = "index.html";
   }
@@ -80,120 +18,110 @@ document.addEventListener("DOMContentLoaded", function () {
     previousCreditors,
     todayCreditors;
 
-  document
-    .getElementById("accountNumber")
-    .addEventListener("change", function (event) {
-      const selectedValue = event.target.value;
-      const debtorChange = document.getElementById("debtor-change");
-      const creditorChange = document.getElementById("creditor-change");
-      const netDifferencePayable = document.getElementById(
-        "net-difference-payables"
-      );
-      const netDifferenceReceivable = document.getElementById(
-        "net-difference-receivables"
-      );
-      const entriesObj = {
-        "funds received": null,
-        "funds sent": null,
-        "Advices Updated": null,
-        "Tax Invoices": null,
-        "Purchase Voucher Sum": null,
-        "Previous Day Debtors": null,
-        "Previous Day Creditors": null,
-        "Today's Creditors": null,
-        "Today's Debtors": null,
-      };
-      fetch("http://127.0.0.1:3000/api/entries", {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: `Bearer ${token}`,
-        },
-      })
-        .then((response) => {
-          if (!response.ok) {
-            return response.json().then((error) => {
-              throw new Error(error.error || "Unknown error occurred");
-            });
-          }
-          return response.json();
-        })
-        .then((data) => {
-          let count = 0;
-          data.forEach((entry) => {
-            if (entry.acc_number == selectedValue) {
-              entriesObj[entry.type] = [entry.amount, entry.mailid];
-              count++;
-            }
+  document.getElementById("accountNumber").addEventListener("change", function (event) {
+    const selectedValue = event.target.value;
+    const debtorChange = document.getElementById("debtor-change");
+    const creditorChange = document.getElementById("creditor-change");
+    const netDifferencePayable = document.getElementById("net-difference-payables");
+    const netDifferenceReceivable = document.getElementById("net-difference-receivables");
+    const entriesObj = {
+      "funds received": null,
+      "funds sent": null,
+      "Advices Updated": null,
+      "Tax Invoices": null,
+      "Purchase Voucher Sum": null,
+      "Previous Day Debtors": null,
+      "Previous Day Creditors": null,
+      "Today's Creditors": null,
+      "Today's Debtors": null,
+    };
+    fetch("http://127.0.0.1:3000/api/entries", {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: `Bearer ${token}`,
+      },
+    })
+      .then((response) => {
+        if (!response.ok) {
+          return response.json().then((error) => {
+            throw new Error(error.error || "Unknown error occurred");
           });
-          if (count) {
-            const entries = document.getElementById("entries");
-            entries.innerHTML = "";
-            Object.entries(entriesObj).forEach(([key, value]) => {
-              const type = key;
-              const amount = value[0];
-              const mailid = value[1];
-              switch (type) {
-                case "funds received":
-                  fundsReceived = amount;
-                  break;
-                case "funds sent":
-                  fundsSent = amount;
-                  break;
-                case "Advices Updated":
-                  adviceUpdated = amount;
-                  break;
-                case "Purchase Voucher Sum":
-                  purchaseVoucher = amount;
-                  break;
-                case "Tax Invoices":
-                  taxInvoices = amount;
-                  break;
-                case "Previous Day Debtors":
-                  previousDebtors = amount;
-                  break;
-                case "Today's Debtors":
-                  todayDebtors = amount;
-                  break;
-                case "Previous Day Creditors":
-                  previousCreditors = amount;
-                  break;
-                case "Today's Creditors":
-                  todayCreditors = amount;
-                  break;
-              }
+        }
+        return response.json();
+      })
+      .then((data) => {
+        let count = 0;
+        data.forEach((entry) => {
+          if (entry.acc_number == selectedValue) {
+            entriesObj[entry.type] = [entry.amount, entry.mailid];
+            count++;
+          }
+        });
+        if (count) {
+          const entries = document.getElementById("entries");
+          entries.innerHTML = "";
+          Object.entries(entriesObj).forEach(([key, value]) => {
+            const type = key;
+            const amount = value[0];
+            const mailid = value[1];
+            switch (type) {
+              case "funds received":
+                fundsReceived = amount;
+                break;
+              case "funds sent":
+                fundsSent = amount;
+                break;
+              case "Advices Updated":
+                adviceUpdated = amount;
+                break;
+              case "Purchase Voucher Sum":
+                purchaseVoucher = amount;
+                break;
+              case "Tax Invoices":
+                taxInvoices = amount;
+                break;
+              case "Previous Day Debtors":
+                previousDebtors = amount;
+                break;
+              case "Today's Debtors":
+                todayDebtors = amount;
+                break;
+              case "Previous Day Creditors":
+                previousCreditors = amount;
+                break;
+              case "Today's Creditors":
+                todayCreditors = amount;
+                break;
+            }
 
-              const entryDiv = document.createElement("div");
-              entryDiv.className = "entry";
-              entryDiv.innerHTML = `
+            const entryDiv = document.createElement("div");
+            entryDiv.className = "entry";
+            entryDiv.innerHTML = `
                 <div class="type">${key}(<i class="fa-solid fa-indian-rupee-sign"></i>)</div>
                 <div class="amount">${amount} /-</div>
                 <div class="user"> ${mailid} </div>
               `;
-              entries.appendChild(entryDiv);
-            });
-            debtorChange.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${
-              todayDebtors - previousDebtors
+            entries.appendChild(entryDiv);
+          });
+          debtorChange.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${todayDebtors - previousDebtors
             } /-`;
-            creditorChange.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${
-              todayCreditors - previousCreditors
+          creditorChange.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${todayCreditors - previousCreditors
             } /-`;
-            netDifferencePayable.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${
-              purchaseVoucher - fundsSent
+          netDifferencePayable.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${purchaseVoucher - fundsSent
             } /-`;
-            netDifferenceReceivable.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${
-              taxInvoices - adviceUpdated
+          netDifferenceReceivable.innerHTML = `<i class="fa-solid fa-indian-rupee-sign"></i> ${taxInvoices - adviceUpdated
             } /-`;
-          } else {
-            entries.innerHTML = "empty";
-            debtorChange.innerHTML = "---";
-            creditorChange.innerHTML = "---";
-            netDifferencePayable.innerHTML = "---";
-            netDifferenceReceivable.innerHTML = "---";
-          }
-        })
-        .catch((error) => console.error("Error fetching entries:", error));
-    });
+        } else {
+          entries.innerHTML = "empty";
+          debtorChange.innerHTML = "---";
+          creditorChange.innerHTML = "---";
+          netDifferencePayable.innerHTML = "---";
+          netDifferenceReceivable.innerHTML = "---";
+        }
+      })
+      .catch((error) => console.error("Error fetching entries:", error));
+  });
 
   function changePassword(currentPassword, newPassword) {
     fetch("http://127.0.0.1:3000/api/changePassword", {
