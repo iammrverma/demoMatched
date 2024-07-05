@@ -204,7 +204,7 @@ document.addEventListener("DOMContentLoaded", function () {
         }
         return response.json();
       })
-      .then((data) => {
+      .then(() => {
         Swal.fire({
           icon: "success",
           title: "Success",
@@ -226,7 +226,7 @@ document.addEventListener("DOMContentLoaded", function () {
       });
   }
 
-  document.getElementById("user").addEventListener("click", (e) => {
+  document.getElementById("user").addEventListener("click", () => {
     console.log("click");
     const userInfo = document.getElementsByClassName("user-info")[0];
     userInfo.classList.add("focus");
@@ -249,7 +249,7 @@ document.addEventListener("DOMContentLoaded", function () {
     close.style.setProperty("color", "var(--primary)");
     close.id = "close";
     close.innerHTML = `<i class="fa-solid fa-xmark"></i>`;
-    close.addEventListener("click", (e) => {
+    close.addEventListener("click", () => {
       userInfo.classList.remove("focus");
       emailEle.innerHTML = "";
       emailEle.innerHTML = email;
@@ -292,7 +292,7 @@ document.addEventListener("DOMContentLoaded", function () {
     document.addEventListener("click", outsideClickListener);
   });
 
-  document.getElementById("gear").addEventListener("click", function (event) {
+  document.getElementById("gear").addEventListener("click", function () {
     const notificationBox = document.getElementById("notification");
     const header = document.getElementById("header");
     const financeUsers = document.getElementById("financeUsers");
