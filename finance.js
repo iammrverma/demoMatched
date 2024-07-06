@@ -167,8 +167,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const fundsSent = document.getElementById("fundsSent").value;
     const accountNumber = document.getElementById("accountNumber").value;
 
-    make_request(email, "funds received", fundsReceived, getDate(), accountNumber);
-    make_request(email, "funds sent", fundsSent, getDate(), accountNumber);
+    make_request(email, "Funds Received", fundsReceived, getDate(), accountNumber);
+    make_request(email, "Funds Sent", fundsSent, getDate(), accountNumber);
   });
 
 });
