@@ -166,9 +166,17 @@ document.addEventListener("DOMContentLoaded", function () {
     const fundsReceived = document.getElementById("fundsReceived").value;
     const fundsSent = document.getElementById("fundsSent").value;
     const accountNumber = document.getElementById("accountNumber").value;
-
-    make_request(email, "Funds Received", fundsReceived, getDate(), accountNumber);
-    make_request(email, "Funds Sent", fundsSent, getDate(), accountNumber);
+    if (fundsReceived.length<=9 && fundsSent.length<=9){
+      make_request(email, "Funds Received", fundsReceived, getDate(), accountNumber);
+      make_request(email, "Funds Sent", fundsSent, getDate(), accountNumber);
+    }
+    else {
+      Swal.fire({
+        icon: "error",
+        title: "Error",
+        text: "Supported values upto 9 digits",
+      });
+    }
   });
 
 });
