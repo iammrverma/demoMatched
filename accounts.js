@@ -174,7 +174,16 @@ document.addEventListener("DOMContentLoaded", function () {
           document.getElementById("creditors-previous").value,
         "Today's Creditors": document.getElementById("creditors-today").value,
       };
-
+      for(const key in entry_map){
+        if (entry_map[key].length > 9) {
+          Swal.fire({
+            icon: "error",
+            title: "Error",
+            text: "Supported values upto 9 digits",
+          });
+          return;
+        }
+      }
       for (const key in entry_map) {
         if (entry_map.hasOwnProperty(key)) {
           try {

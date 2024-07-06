@@ -25,8 +25,8 @@ document.addEventListener("DOMContentLoaded", function () {
     const netDifferencePayable = document.getElementById("net-difference-payables");
     const netDifferenceReceivable = document.getElementById("net-difference-receivables");
     const entriesObj = {
-      "funds received": null,
-      "funds sent": null,
+      "Funds Received": null,
+      "Funds Sent": null,
       "Advices Updated": null,
       "Tax Invoices": null,
       "Purchase Voucher Sum": null,
@@ -66,10 +66,10 @@ document.addEventListener("DOMContentLoaded", function () {
             const amount = value[0];
             const mailid = value[1];
             switch (type) {
-              case "funds received":
+              case "Funds Received":
                 fundsReceived = amount;
                 break;
-              case "funds sent":
+              case "Funds Sent":
                 fundsSent = amount;
                 break;
               case "Advices Updated":
