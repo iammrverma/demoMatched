@@ -22,80 +22,85 @@
 </head>
 
 <body>
-  <header class="header">
-    <div class="matched"><a href="/index.html">InsightsOnAccounts</a></div>
-    <div class="logo">
-      <img src="assets/logo.ico" alt="3T | logo" />
-    </div>
-  </header>
-  <nav class="nav">
-    <h2>CFO's Desk</h2>
-    <div class="info">
-      <select class="info" id="accountNumber" name="accountNumber" required title="">
-        <option value="" disabled selected>Select account number</option>
-        <option value="4583">4583</option>
-        <option value="0163">0163</option>
-        <option value="6733">6733</option>
-        <option value="0191">0191</option>
-      </select>
-    </div>
-  </nav>
-  <div class="feilds">
-    <div class="feild">
-      <span class="name">Change in debtors</span>
-      <span class="amount" id="debtor-change">
-        <i class="fa-solid fa-indian-rupee-sign"></i>
-        000/-
-      </span>
-    </div>
-    <div class="feild">
-      <span class="name">Change in Creditors</span>
-      <span class="amount" id="creditor-change">
-        <i class="fa-solid fa-indian-rupee-sign"></i>
-        000/-
-      </span>
-    </div>
-    <div class="feild">
-      <span class="name">Net Difference Payables</span>
-      <span class="amount" id="net-difference-payables">
-        <i class="fa-solid fa-indian-rupee-sign"></i>
-        000/-
-      </span>
-    </div>
-    <div class="feild">
-      <span class="name">Net Difference Receivables</span>
-      <span class="amount" id="net-difference-receivables">
-        <i class="fa-solid fa-indian-rupee-sign"></i>
-        000/-
-      </span>
-    </div>
-  </div>
-  <div class="today">
-    <div class="heading">
-      <h2>Data</h2>
-      <div class="user-info">
-        <div id="user"><i class="fa-solid fa-user"></i></div>
-        <div id="email">date</div>
+  <div class="animation-container" style="width: 100vw; height: 100vh;">
+    <img src="assets/gif.webp" >
+ </div>
+  <div class="content">
+    <header class="header">
+      <div class="matched"><a href="/index.html">InsightsOnAccounts</a></div>
+      <div class="logo">
+        <img src="assets/logo.ico" alt="3T | logo" />
+      </div>
+    </header>
+    <nav class="nav">
+      <h2>CFO's Desk</h2>
+      <div class="info">
+        <select class="info" id="accountNumber" name="accountNumber" required title="">
+          <option value="" disabled selected>Select account number</option>
+          <option value="4583">4583</option>
+          <option value="0163">0163</option>
+          <option value="6733">6733</option>
+          <option value="0191">0191</option>
+        </select>
+      </div>
+    </nav>
+    <div class="feilds">
+      <div class="feild">
+        <span class="name">Change in debtors</span>
+        <span class="amount" id="debtor-change">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+          000/-
+        </span>
+      </div>
+      <div class="feild">
+        <span class="name">Change in Creditors</span>
+        <span class="amount" id="creditor-change">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+          000/-
+        </span>
+      </div>
+      <div class="feild">
+        <span class="name">Net Difference Payables</span>
+        <span class="amount" id="net-difference-payables">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+          000/-
+        </span>
+      </div>
+      <div class="feild">
+        <span class="name">Net Difference Receivables</span>
+        <span class="amount" id="net-difference-receivables">
+          <i class="fa-solid fa-indian-rupee-sign"></i>
+          000/-
+        </span>
       </div>
     </div>
-    <div id="entries"></div>
-  </div>
-  <div id="notification">
-    <div id="header">
-      <span>Users</span>
-      <span id="close"><i class="fa-solid fa-xmark"></i></span>
-    </div>
-    <div id="allUsers">
-      <div>
-        Finance 
-        <div id="financeUsers"></div>
+    <div class="today">
+      <div class="heading">
+        <h2>Data</h2>
+        <div class="user-info">
+          <div id="user"><i class="fa-solid fa-user"></i></div>
+          <div id="email">date</div>
+        </div>
       </div>
-      <div>
-        Accounts 
-        <div id="accountsUsers"></div>
-      </div>
+      <div id="entries"></div>
     </div>
-    <div id="gear" ><i class="fa-solid fa-user-gear"></i></i></div>
+    <div id="notification">
+      <div id="header">
+        <span>Users</span>
+        <span id="close"><i class="fa-solid fa-xmark"></i></span>
+      </div>
+      <div id="allUsers">
+        <div>
+          Finance 
+          <div id="financeUsers"></div>
+        </div>
+        <div>
+          Accounts 
+          <div id="accountsUsers"></div>
+        </div>
+      </div>
+      <div id="gear" ><i class="fa-solid fa-user-gear"></i></i></div>
+    </div>
   </div>
   <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
   <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>

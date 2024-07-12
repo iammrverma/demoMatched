@@ -10,6 +10,21 @@
   --color3: #e9a7a9;
   --color4: #edd1d0;
 }
+.animation-container{
+  position: absolute;
+  top: 0;
+  left: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: hsla(0.8,69.4%,57.6%, 0.3);
+  backdrop-filter:  blur(10px);
+  overflow:hidden;
+}
+.animation-container img{
+  height: 80%;
+  border-radius: 50%;
+}
 .header {
   display: flex;
   justify-content: space-between;
@@ -207,6 +222,10 @@ input:focus {
   }
 }
 @media only screen and (max-width: 450px) {
+  .animation-container img{
+    height: auto;
+    width: 100%;
+  }
   .nav {
     width: 100%;
   }

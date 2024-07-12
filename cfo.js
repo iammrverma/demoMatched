@@ -1,3 +1,10 @@
+window.addEventListener('load', ()=>{
+  console.log('loaded');
+  setTimeout(() => {
+    const ele = document.querySelector(".animation-container");
+    ele.style.display = "none"; 
+  }, 1500);
+});
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("token");
   if (!token) {
