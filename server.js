@@ -9,6 +9,7 @@ const bcrypt = require("bcrypt");
 const helmet = require("helmet"); // Import helmet for security
 const rateLimit = require("express-rate-limit"); // Import rate-limit for rate limiting
 const morgan = require("morgan"); // Import morgan for logging
+
 console.log(
   process.env.PORT,
   process.env.SECRET_KEY,
@@ -17,19 +18,33 @@ console.log(
   process.env.DB_PASSWORD,
   process.env.DB_NAME
 );
-const app = express();
-const PORT = process.env.PORT;//|| 3000;
-const SECRET_KEY = process.env.SECRET_KEY;// || "your_secret_key";
-const TOKEN_EXPIRATION = process.env.TOKEN_EXPIRATION;//"1h";
 
-// Use Helmet for basic security
-app.use(helmet());
+const app = express();
+const PORT = process.env.PORT || 3000;
+const SECRET_KEY = process.env.SECRET_KEY || "your_secret_key";
+const TOKEN_EXPIRATION = process.env.TOKEN_EXPIRATION || "1h";
+
+// Use Helmet with CSP settings
+app.use(
+  helmet.contentSecurityPolicy({
+    directives: {
+      defaultSrc: ["'self'"],
+      scriptSrc: ["'self'", "https://cdn.jsdelivr.net"],
+      styleSrc: ["'self'", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net"],
+      fontSrc: ["'self'", "https://fonts.gstatic.com"],
+      imgSrc: ["'self'", "data:"],
+      connectSrc: ["'self'"],
+      frameSrc: ["'self'"]
+      // Add more directives as needed based on your application's requirements
+    }
+  })
+);
 
 // Rate limiting middleware to limit repeated requests to public APIs
 const limiter = rateLimit({
-  windowMs: 15 * 60 * 1000, // 15 minutestrunc
+  windowMs: 15 * 60 * 1000, // 15 minutes
   max: 1000, // Limit each IP to 100 requests per `window` (here, per 15 minutes)
-  message: "Too many requests from this IP, please try again later.",
+  message: "Too many requests from this IP, please try again later."
 });
 
 app.use(limiter);
@@ -37,16 +52,18 @@ app.use(limiter);
 // Use morgan for logging
 app.use(morgan("combined"));
 
+// Enable CORS
 app.use(cors());
+
 app.use(bodyParser.json());
 app.use(express.static(path.join(__dirname, "public")));
 
 const pool = mysql.createPool({
   connectionLimit: 10,
-  host: process.env.DB_HOST,// || "localhost",
-  user: process.env.DB_USER,// || "root",
-  password: process.env.DB_PASSWORD,// || "mysql@3t",
-  database: process.env.DB_NAME,// || "matched",
+  host: process.env.DB_HOST || "localhost",
+  user: process.env.DB_USER || "root",
+  password: process.env.DB_PASSWORD || "mysql@3t",
+  database: process.env.DB_NAME || "matched"
 });
 
 const query = (sql, params) => {
