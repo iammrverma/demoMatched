@@ -213,5 +213,5 @@ app.delete("/api/user", authenticateToken, requireDepartment("cfo"), async (req,
 });
 
 app.listen(PORT, () => {
-  console.log(`Server started on http://localhost:${PORT}`);
+  console.log(`Server started on http://16.171.64.239:${PORT}`);
 });

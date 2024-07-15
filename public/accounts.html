@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Merriweather:ital,wght@0,300;0,400;0,700;0,900;1,300;1,400;1,700;1,900&family=Roboto:ital,wght@0,100;0,300;0,400;0,500;0,700;0,900;1,100;1,300;1,400;1,500;1,700;1,900&display=swap"
+      rel="stylesheet"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css"
+      integrity="sha512-SnH5WK+bZxgPHs44uWIX+LLJAJ9/2PkPKZ5QiAj6Ta86w+fsb2TkcmfRyVX3pBnMFcV7oQPJkl9QevSCWr3W6A=="
+      crossorigin="anonymous"
+      referrerpolicy="no-referrer"
+    />
+    <link
+      rel="stylesheet"
+      href="https://cdn.jsdelivr.net/npm/sweetalert2@11/dist/sweetalert2.min.css"
+    />
+
+    <title>Accounts</title>
+    <link rel="icon" href="./assets/logo.ico" />
+    <link rel="stylesheet" href="./styles/accounts.css" />
+  </head>
+  <body>
+    <div class="animation-container" style="width: 100vw; height: 100vh;">
+      <img src="./assets/gif.webp">
+   </div>
+    <div class="content">
+      <header class="header">
+        <div class="matched"><a href="./index.html">InsightsOnAccounts</a></div>
+        <div class="logo">
+          <img src="./assets/logo.ico" alt="3T | logo" />
+        </div>
+      </header>
+      <nav class="nav">
+        <h2>Accounts Data</h2>
+        <div class="info">
+          <div id="user"><i class="fa-solid fa-user"></i></div>
+          <div class="email" id="email">mail</div>
+        </div>
+      </nav>
+      <div class="container">
+        <form id="entryForm">
+          <div class="entry">
+            <label for="advice-updated">Advice Updated</label>
+            <input type="number" id="advice-updated" placeholder="Advice Updated" required />
+          </div>
+          <div class="entry">
+            <label for="purchase-voucher">Purchase Voucher Sum</label>
+            <input
+              type="number"
+              id="purchase-voucher"
+              placeholder="Purchase Voucher Sum"
+              required
+            />
+          </div>
+          <div class="entry">
+            <label for="tax-invoice">Tax Invoice</label>
+            <input
+              type="number"
+              id="tax-invoice"
+              placeholder="Tax Invoice"
+              required
+            />
+          </div>
+          <div class="entry">
+            <label for="debtors-previous">Previous Day Debtors</label>
+            <input
+              type="number"
+              id="debtors-previous"
+              placeholder="Previous Day Debtors"
+              required
+            />
+          </div>
+          <div class="entry">
+            <label for="debtors-today">Today's Debtors</label>
+            <input
+              type="number"
+              id="debtors-today"
+              placeholder="Today's Debtors"
+              required
+            />
+          </div>
+          <div class="entry">
+            <label for="creditors-previous">Previous Day Creditors</label>
+            <input
+              type="number"
+              id="creditors-previous"
+              placeholder="Previous Day Creditors"
+              required
+            />
+          </div>
+          <div class="entry">
+            <label for="creditors-today">Today's Creditors</label>
+            <input
+              type="number"
+              id="creditors-today"
+              placeholder="Today's Creditors"
+              required
+            />
+          </div>
+          <div class="entry">
+            <label for="accountNumber">Account Number:</label>
+            <select id="accountNumber" name="accountNumber" required title="">
+              <option value="" disabled selected>Select account number</option>
+              <option value="4583">4583</option>
+              <option value="0163">0163</option>
+              <option value="6733">6733</option>
+              <option value="0191">0191</option>
+            </select>
+          </div>
+          <button type="submit">Add Entry</button>
+        </form>
+      </div>
+    </div>
+    <script src="https://cdn.jsdelivr.net/npm/jwt-decode/build/jwt-decode.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script src="./accounts.js"></script>
+    <script src="https://unpkg.com/@popperjs/core@2/dist/umd/popper.min.js"></script>
+    <script src="https://unpkg.com/tippy.js@6/dist/tippy-bundle.umd.js"></script>
+    <script src="./myTippy.js"></script>
+  </body>
+</html>
