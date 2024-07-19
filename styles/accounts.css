@@ -46,7 +46,6 @@
   overflow: hidden;
 }
 .header .logo img {
-  /* object-fit: contain; */
   width: 100%;
   height: 100%;
 }
@@ -56,7 +55,6 @@
   flex-wrap: wrap;
   justify-content: space-between;
   align-items: baseline;
-  width: 80%;
   margin: auto;
   padding: 0.5rem;
   font-weight: 400;
@@ -102,9 +100,8 @@
   text-wrap: nowrap;
 }
 .container {
-  width: 80%;
   margin: auto;
-  border: 6px solid var(--primary);
+  /* border: 6px solid var(--primary); */
   display: flex;
   border-radius: 2rem;
   padding: 1rem;
@@ -112,9 +109,6 @@
   align-items: center;
 }
 
-#entryForm {
-  width: 80%;
-}
 .entry {
   display: flex;
   justify-content: space-between;

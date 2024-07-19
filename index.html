@@ -21,6 +21,9 @@
     <title>3T</title>
     <link rel="icon" href="./assets/logo.ico" />
     <link rel="stylesheet" href="./styles/style.css" />
+    <link rel="stylesheet" href="./styles/accounts.css">
+    <link rel="stylesheet" href="./styles/cfo.css">
+    <link rel="stylesheet" href="./styles/finance.css">
   </head>
   <body>
     <header class="header">
@@ -29,32 +32,203 @@
         <img src="./assets/logo.ico" alt="3T | logo" />
       </div>
     </header>
-    <div class="container">
-      <form id="loginForm">
-        <div for="">Enter Email And Password</div>
-        <div class="inputs">
-          <input
-            type="email"
-            id="email"
-            class="input"
-            placeholder="Email"
-            required
-          />
-          <input
-            type="password"
-            id="password"
-            class="input"
-            placeholder="Password"
-            required
-          />
+    <div class="main-grid">
+      <div id="part1">
+        <nav class="nav">
+          <h2>Finance Data</h2>
+          <div class="info">
+            <div id="user"><i class="fa-solid fa-user"></i></div>
+            <div class="email" id="email">mail</div>
+          </div>
+        </nav>
+        <div class="container">
+          <form id="fundsForm">
+            <div class="form-group">
+              <label for="fundsReceived">Funds Received:</label>
+              <input
+                type="number"
+                id="fundsReceived"
+                name="fundsReceived"
+                required
+              />
+            </div>
+            <div class="form-group">
+              <label for="fundsSent">Funds Sent:</label>
+              <input type="number" id="fundsSent" name="fundsSent" required />
+            </div>
+            <div class="form-group">
+              <label for="accountNumber">Account Number:</label>
+              <select id="accountNumber" name="accountNumber" required title="">
+                <option value="" disabled selected>Select account number</option>
+                <option value="4583">4583</option>
+                <option value="0163">0163</option>
+                <option value="6733">6733</option>
+                <option value="0191">0191</option>
+              </select>
+            </div>
+            <button type="submit">Submit</button>
+          </form>
         </div>
-
-        <button type="submit">Login</button>
-      </form>
+      </div>
+      <div id="part2">
+        <nav class="nav">
+          <h2>Accounts Data</h2>
+          <div class="info">
+            <div id="user"><i class="fa-solid fa-user"></i></div>
+            <div class="email" id="email">mail</div>
+          </div>
+        </nav>
+        <div class="container">
+          <form id="entryForm">
+            <div class="entry">
+              <label for="advice-updated">Advice Updated</label>
+              <input type="number" id="advice-updated" placeholder="Advice Updated" required />
+            </div>
+            <div class="entry">
+              <label for="purchase-voucher">Purchase Voucher Sum</label>
+              <input
+                type="number"
+                id="purchase-voucher"
+                placeholder="Purchase Voucher Sum"
+                required
+              />
+            </div>
+            <div class="entry">
+              <label for="tax-invoice">Tax Invoice</label>
+              <input
+                type="number"
+                id="tax-invoice"
+                placeholder="Tax Invoice"
+                required
+              />
+            </div>
+            <div class="entry">
+              <label for="debtors-previous">Previous Day Debtors</label>
+              <input
+                type="number"
+                id="debtors-previous"
+                placeholder="Previous Day Debtors"
+                required
+              />
+            </div>
+            <div class="entry">
+              <label for="debtors-today">Today's Debtors</label>
+              <input
+                type="number"
+                id="debtors-today"
+                placeholder="Today's Debtors"
+                required
+              />
+            </div>
+            <div class="entry">
+              <label for="creditors-previous">Previous Day Creditors</label>
+              <input
+                type="number"
+                id="creditors-previous"
+                placeholder="Previous Day Creditors"
+                required
+              />
+            </div>
+            <div class="entry">
+              <label for="creditors-today">Today's Creditors</label>
+              <input
+                type="number"
+                id="creditors-today"
+                placeholder="Today's Creditors"
+                required
+              />
+            </div>
+            <div class="entry">
+              <label for="accountNumber">Account Number:</label>
+              <select id="accountNumber" name="accountNumber" required title="">
+                <option value="" disabled selected>Select account number</option>
+                <option value="4583">4583</option>
+                <option value="0163">0163</option>
+                <option value="6733">6733</option>
+                <option value="0191">0191</option>
+              </select>
+            </div>
+            <button type="submit">Add Entry</button>
+          </form>
+        </div>
+      </div>
+      <div id="part3">
+        <nav class="nav">
+          <h2>CFO's Desk</h2>
+          <div class="info">
+            <select class="info" id="accountNumber" name="accountNumber" required title="">
+              <option value="" disabled selected>Select account number</option>
+              <option value="4583">4583</option>
+              <option value="0163">0163</option>
+              <option value="6733">6733</option>
+              <option value="0191">0191</option>
+            </select>
+          </div>
+        </nav>
+        <div class="feilds">
+          <div class="feild">
+            <span class="name">Change in debtors</span>
+            <span class="amount" id="debtor-change">
+              <i class="fa-solid fa-indian-rupee-sign"></i>
+              000/-
+            </span>
+          </div>
+          <div class="feild">
+            <span class="name">Change in Creditors</span>
+            <span class="amount" id="creditor-change">
+              <i class="fa-solid fa-indian-rupee-sign"></i>
+              000/-
+            </span>
+          </div>
+          <div class="feild">
+            <span class="name">Net Difference Payables</span>
+            <span class="amount" id="net-difference-payables">
+              <i class="fa-solid fa-indian-rupee-sign"></i>
+              000/-
+            </span>
+          </div>
+          <div class="feild">
+            <span class="name">Net Difference Receivables</span>
+            <span class="amount" id="net-difference-receivables">
+              <i class="fa-solid fa-indian-rupee-sign"></i>
+              000/-
+            </span>
+          </div>
+        </div>
+        <div class="today">
+          <div class="heading">
+            <h2>Data</h2>
+            <div class="user-info">
+              <div id="user"><i class="fa-solid fa-user"></i></div>
+              <div id="email">date</div>
+            </div>
+          </div>
+          <div id="entries"></div>
+        </div>
+        <div id="notification">
+          <div id="header">
+            <span>Users</span>
+            <span id="close"><i class="fa-solid fa-xmark"></i></span>
+          </div>
+          <div id="allUsers">
+            <div>
+              Finance 
+              <div id="financeUsers"></div>
+            </div>
+            <div>
+              Accounts 
+              <div id="accountsUsers"></div>
+            </div>
+          </div>
+          <div id="gear" ><i class="fa-solid fa-user-gear"></i></i></div>
+        </div>
+      </div>
     </div>
 
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-    <script src="./script.js">
-    </script>
+    <!-- <script src="./script.js"></script> -->
+    <script src="./accounts.js"></script>
+    <script src="./finance.js"></script>
+    <script src="./cfo.js"></script>
   </body>
 </html>
