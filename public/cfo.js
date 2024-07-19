@@ -7,6 +7,8 @@ window.addEventListener('load', ()=>{
 });
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("token");
+  const IP = "16.171.64.239";
+  const PORT = 3000;
   if (!token) {
     window.location.href = "index.html";
   }
@@ -31,6 +33,9 @@ document.addEventListener("DOMContentLoaded", function () {
     const creditorChange = document.getElementById("creditor-change");
     const netDifferencePayable = document.getElementById("net-difference-payables");
     const netDifferenceReceivable = document.getElementById("net-difference-receivables");
+    const entries = document.getElementById("entries");
+    const loadingContainer = document.createElement('div');
+    const bar = document.createElement('div');
     const entriesObj = {
       "Funds Received": null,
       "Funds Sent": null,
@@ -42,7 +47,13 @@ document.addEventListener("DOMContentLoaded", function () {
       "Today's Creditors": null,
       "Today's Debtors": null,
     };
-    fetch("http://16.171.64.239/api/entries", {
+    loadingContainer.classList.add("loadingContainer");
+    bar.id="bar";
+    loadingContainer.appendChild(bar);
+    entries.innerHtml = "";
+    entries.innerText = "";
+    entries.appendChild(loadingContainer);
+    fetch(`http://${IP}:${PORT}/api/entries`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -50,6 +61,7 @@ document.addEventListener("DOMContentLoaded", function () {
       },
     })
       .then((response) => {
+        entries.innerHTML = "";
         if (!response.ok) {
           return response.json().then((error) => {
             throw new Error(error.error || "Unknown error occurred");
@@ -66,8 +78,6 @@ document.addEventListener("DOMContentLoaded", function () {
           }
         });
         if (count) {
-          const entries = document.getElementById("entries");
-          entries.innerHTML = "";
           Object.entries(entriesObj).forEach(([key, value]) => {
             const type = key;
             const amount = value[0];
@@ -127,11 +137,14 @@ document.addEventListener("DOMContentLoaded", function () {
           netDifferenceReceivable.innerHTML = "---";
         }
       })
-      .catch((error) => console.error("Error fetching entries:", error));
+      .catch((error) => {
+         console.error("Error fetching entries:", error);
+         entries.innerHtml = error;
+      });
   });
 
   function changePassword(currentPassword, newPassword) {
-    fetch("http://16.171.64.239/api/changePassword", {
+    fetch(`http://${IP}:${PORT}/api/changePassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -245,7 +258,7 @@ document.addEventListener("DOMContentLoaded", function () {
     header.style.display = "flex";
     console.log(token);
 
-    fetch("http://16.171.64.239/api/users", {
+    fetch(`http://${IP}:${PORT}/api/users`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -282,7 +295,7 @@ document.addEventListener("DOMContentLoaded", function () {
           userEle.querySelector(".del").addEventListener("click", function () {
             const userId = this.getAttribute("data-id");
 
-            fetch("http://16.171.64.239/api/user", {
+            fetch(`http://${IP}:${PORT}/api/users`, {
               method: "DELETE",
               headers: {
                 "Content-Type": "application/json",
@@ -367,7 +380,7 @@ document.addEventListener("DOMContentLoaded", function () {
               const { email, password } = result.value;
               console.log("Email:", email, "Password:", password);
               const userDepartment = "finance";
-              fetch("http://16.171.64.239/api/users", {
+              fetch(`http://${IP}:${PORT}/api/users`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",
@@ -462,7 +475,7 @@ document.addEventListener("DOMContentLoaded", function () {
               const { email, password } = result.value;
               console.log("Email:", email, "Password:", password);
               const userDepartment = "accounts";
-              fetch("http://16.171.64.239/api/users", {
+              fetch(`http://${IP}:${PORT}/api/users`, {
                 method: "POST",
                 headers: {
                   "Content-Type": "application/json",

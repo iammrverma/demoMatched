@@ -471,3 +471,32 @@
     height: 1.5rem;
   }
 }
+.loadingContainer{
+  width: 100%;
+  height: 2px;
+  position :relative;
+  overflow: hidden;
+}
+#bar{
+  height :100%;
+  position :absolute;
+  transform: translateX(-50%);
+  animation: loading 3s linear infinite;
+}
+@keyframes loading {
+  0%{
+    background-color: var(--primary);
+    left: 0;
+    width: 15%;
+  }
+  50% {
+    width: 50%;
+    left: 100%;
+    background-color: var(--color3);
+  }
+  100%{
+    width: 15%;
+    left: 0;
+    background-color: var(--primary);
+  }
+}
