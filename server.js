@@ -30,7 +30,7 @@ app.use(
     directives: {
       defaultSrc: ["'self'"],
       scriptSrc: ["'self'", "https://cdn.jsdelivr.net"],
-      styleSrc: ["'self'", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net"],
+      styleSrc: ["'self'", "'unsafe-inline'", "https://fonts.googleapis.com", "https://cdn.jsdelivr.net"],
       fontSrc: ["'self'", "https://fonts.gstatic.com"],
       imgSrc: ["'self'", "data:"],
       connectSrc: ["'self'"],
@@ -104,10 +104,6 @@ function requireDepartment(department) {
     next();
   };
 }
-
-app.get('*', (req, res) => {
-  res.sendFile(path.join(__dirname, 'public', 'index.html'));
-});
 
 app.post("/api/verifyAccess", async (req, res) => {
   const { email, password } = req.body;
@@ -220,7 +216,7 @@ app.get("/api/users", authenticateToken, requireDepartment("cfo"), async (req, r
   }
 });
 
-app.delete("/api/user", authenticateToken, requireDepartment("cfo"), async (req, res) => {
+app.delete("/api/users", authenticateToken, requireDepartment("cfo"), async (req, res) => {
   const { userId } = req.body;
   try {
     const result = await query("DELETE FROM users WHERE id = ?", [userId]);

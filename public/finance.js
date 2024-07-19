@@ -15,6 +15,8 @@ window.addEventListener('load', () => {
 });
 document.addEventListener("DOMContentLoaded", function () {
   const token = localStorage.getItem("token");
+  const IP = "16.171.64.239";
+  const PORT = 3000;
   if (!token) {
     window.location.href = "index.html";
   }
@@ -25,7 +27,7 @@ document.addEventListener("DOMContentLoaded", function () {
   document.getElementById("email").innerHTML = email;
 
   function changePassword(currentPassword, newPassword) {
-    fetch("http://16.171.64.239/api/changePassword", {
+    fetch(`http://${IP}:${PORT}/api/changePassword`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -64,7 +66,7 @@ document.addEventListener("DOMContentLoaded", function () {
   }
 
   function make_request(mailid, type, amount, entry_date, accountNumber) {
-    fetch("http://16.171.64.239/api/entries", {
+    fetch(`http://${IP}:${PORT}/api/entries`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -186,5 +188,3 @@ document.addEventListener("DOMContentLoaded", function () {
   });
 
 });
-
-
