@@ -2,8 +2,9 @@ document.getElementById("loginForm").addEventListener("submit", function (event)
   event.preventDefault();
   const email = document.getElementById("email").value;
   const password = document.getElementById("password").value;
-
-  fetch("http://16.171.64.239/api/verifyAccess", {
+  const IP = "16.171.64.239";
+  const PORT = 3000;
+  fetch(`http://${IP}:${PORT}/api/verifyAccess`, {
     method: "POST",
     headers: {
       "Content-Type": "application/json",
