@@ -99,7 +99,6 @@
 }
 
 .container {
-  margin: auto;
   display: flex;
   justify-content: space-around;
   border-radius: 2rem;
@@ -140,7 +139,7 @@ input[type="number"] {
 input[type="number"]:focus {
   box-shadow: 0 0 2px 2px var(--color3);
 }
-#accountNumber {
+.accountNumber {
   background-color: var(--primary);
   color: white;
   border: none;
@@ -152,16 +151,16 @@ input[type="number"]:focus {
   transition: all 0.3s ease;
 }
 
-#accountNumber option {
+.accountNumber option {
   background-color: var(--primary);
   color: #f3f3f3;
 }
-#accountNumber:focus {
+.accountNumber:focus {
   border: none;
   box-shadow: 0 0 2px 2px var(--color3);
 }
 
-#accountNumber:hover {
+.accountNumber:hover {
   border: none;
   box-shadow: 0 0 2px 2px var(--color3);
   background-color: white;

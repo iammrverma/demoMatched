@@ -69,7 +69,7 @@
   margin: 0 0.25rem;
 }
 
-#accountNumber {
+#cfoAccountNumber {
   background-color: var(--primary);
   color: white;
   border: none;
@@ -81,18 +81,18 @@
   font-style: italic;
 }
 
-#accountNumber option {
+#cfoAccountNumber option {
   background-color: var(--primary);
   color: #f3f3f3;
   text-align: center;
 }
 
-#accountNumber:focus {
+#cfoAccountNumber:focus {
   border: none;
   box-shadow: 0 0 2px 2px var(--color3);
 }
 
-#accountNumber:hover {
+#cfoAccountNumber:hover {
   border: none;
   box-shadow: 0 0 2px 2px var(--color3);
   background-color: white;
@@ -154,7 +154,7 @@
   grid-template-columns: 1fr;
   row-gap: 1rem;
   padding: 1rem 2rem;
-  width: 90%;
+  /* width: 90%; */
   font-weight: 400;
   margin: auto;
 }
@@ -450,7 +450,7 @@
     width: 100%;
   }
 
-  #accountNumber {
+  #cfoAccountNumber {
     width: 100%;
   }
 }

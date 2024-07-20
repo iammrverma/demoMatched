@@ -25,16 +25,14 @@
   border-radius: 2rem;
   transition: all 1s ease;
   background-color: rgb(241, 238, 238);
-  resize: both;
   padding: 1rem;
   overflow: auto;
   scrollbar-width: 0px;
-  
+
 }
 #part1:hover, #part2:hover, #part3:hover{
   border-radius: .5rem;
-  background-color: white;
-  box-shadow: inset 0 0 4px 0 black;
+  box-shadow: inset 0 0 4px 0 var(--color2);
 }
 #part1{
   grid-area: finance;
